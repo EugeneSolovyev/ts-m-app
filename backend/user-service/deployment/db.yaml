@@ -1,0 +1,177 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: user-db-secret
+type: Opaque
+data:
+  SPRING_DATASOURCE_USERNAME: "ZmluZG1l"
+  SPRING_DATASOURCE_PASSWORD: "cGFzc3dvcmQ="
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  name: user-db
+rules:
+  - apiGroups:
+      - ''
+    resources:
+      - pods
+    verbs:
+      - get
+      - list
+      - update
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: user-db
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: user-db
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: user-db
+subjects:
+  - kind: ServiceAccount
+    name: user-db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-db
+  labels:
+    name: user-db
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  clusterIP: None
+  selector:
+    app: user-db
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: user-db-primary
+  labels:
+    name: user-db-primary
+spec:
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+  selector:
+    name: user-db-primary
+  type: ClusterIP
+  sessionAffinity: None
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: user-db-replica
+  labels:
+    name: user-db-replica
+spec:
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+  selector:
+    name: user-db-replica
+  type: ClusterIP
+  sessionAffinity: None
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: user-db
+  labels:
+    app: user-db
+spec:
+  selector:
+    matchLabels:
+      app: user-db
+  serviceName: user-db
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: user-db
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: replicaset
+                      operator: In
+                      values:
+                        - user-db
+                topologyKey: kubernetes.io/hostname
+      serviceAccountName: user-db
+      securityContext:
+        fsGroup: 26
+      containers:
+        - name: user-db
+          image: "crunchydata/crunchy-postgres:centos7-9.5.15-2.3.0"
+          ports:
+            - containerPort: 5432
+              name: postgres
+          readinessProbe:
+            exec:
+              command:
+                - "/opt/cpm/bin/readiness.sh"
+            initialDelaySeconds: 40
+            timeoutSeconds: 1
+          livenessProbe:
+            exec:
+              command:
+                - "/opt/cpm/bin/liveness.sh"
+            initialDelaySeconds: 40
+            timeoutSeconds: 1
+          env:
+            - name: PGHOST
+              value: "/tmp"
+            - name: PG_MODE
+              value: set
+            - name: PG_REPLICA_HOST
+              value: user-db-replica
+            - name: PG_PRIMARY_HOST
+              value: user-db-primary
+            - name: PG_PRIMARY_PORT
+              value: '5432'
+            - name: PG_PRIMARY_USER
+              value: findmeprimary
+            - name: PG_PRIMARY_PASSWORD
+              value: password
+            - name: PG_DATABASE
+              value: prod
+            - name: PG_USER
+              value: findme
+            - name: PG_PASSWORD
+              value: password
+            - name: PG_ROOT_PASSWORD
+              value: password
+            - name: CCP_NAMESPACE
+              value: default
+          volumeMounts:
+            - name: local-pvc
+              mountPath: "/pgdata"
+              readOnly: false
+  volumeClaimTemplates:
+    - metadata:
+        name: local-pvc
+        labels:
+          app: user-db
+      spec:
+        storageClassName: local-storage
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
