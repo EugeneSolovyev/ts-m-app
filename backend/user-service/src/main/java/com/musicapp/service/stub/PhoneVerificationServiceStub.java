@@ -1,19 +1,22 @@
 package com.musicapp.service.stub;
 
-import com.musicapp.service.PhoneVerificationService;
+import com.musicapp.service.AbstractPhoneVerificationService;
+import com.musicapp.service.TokenService;
 import com.musicapp.util.constants.ProfileConstants;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
 @Profile(ProfileConstants.LOCAL)
-@RequiredArgsConstructor
 @Slf4j
-public class PhoneVerificationServiceStub implements PhoneVerificationService {
+public class PhoneVerificationServiceStub extends AbstractPhoneVerificationService {
 
     private static final String STUB_PHONE_CODE = "9999";
+
+    public PhoneVerificationServiceStub(TokenService tokenService) {
+        super(tokenService);
+    }
 
     @Override
     public void sendCode(String phone, String type) {
@@ -21,15 +24,10 @@ public class PhoneVerificationServiceStub implements PhoneVerificationService {
     }
 
     @Override
-    public boolean verify(String phone, String code) {
-        log.debug("verify stub");
+    protected boolean isValid(String phone, String code) {
+        log.debug("isValid stub");
 
         return STUB_PHONE_CODE.equals(code);
-    }
-
-    @Override
-    public boolean isVerified(String phone) {
-        return true;
     }
 
 }

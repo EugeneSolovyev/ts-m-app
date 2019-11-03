@@ -146,13 +146,13 @@ spec:
             - name: PG_PRIMARY_PORT
               value: '5432'
             - name: PG_PRIMARY_USER
-              value: findmeprimary
+              value: primarymusicapp
             - name: PG_PRIMARY_PASSWORD
               value: password
             - name: PG_DATABASE
               value: prod
             - name: PG_USER
-              value: findme
+              value: musicapp
             - name: PG_PASSWORD
               value: password
             - name: PG_ROOT_PASSWORD
