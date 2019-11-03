@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # user-service
-
 export USER_SERVICE_SERVER_PORT=6000
 export USER_SERVICE_SERVLET_CONTEXT_PATH=/user-service
 export USER_DB_URL=jdbc:postgresql://user-db:5432/postgres
@@ -22,5 +21,6 @@ export TOKEN_SECRET=IUJSJWMveG5bdjNBdjk7cg==
 export SPRING_PROFILES_ACTIVE=local
 export SPRING_JPA_SHOW_SQL=true
 export SPRING_JPA_PROPERTIES_HIBERNATE_TEMP_USE_JDBC_METADATA_DEFAULTS=false
+export SWAGGER_HOST=localhost:8080
 
 docker-compose up --build

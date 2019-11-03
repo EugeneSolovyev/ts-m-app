@@ -28,6 +28,21 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String[] PUBLIC_ENDPOINTS = {
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/auth",
+            "/users/check-phone",
+            "/verification/phone/check-phone-code",
+            "/verification/phone/**/send-code",
+            "/actuator/health"
+    };
+
     private final AuthenticationTokenFilter authenticationTokenFilter;
     private final UserDetailsService userDetailsService;
 
@@ -47,12 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/auth").permitAll()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
-                .antMatchers("/users/check-phone").permitAll()
-                .antMatchers("/verification/phone/check-phone-code").permitAll()
-                .antMatchers("/verification/phone/**/send-code").permitAll()
-                .antMatchers("/actuator/health").permitAll()
+                .antMatchers(PUBLIC_ENDPOINTS).permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

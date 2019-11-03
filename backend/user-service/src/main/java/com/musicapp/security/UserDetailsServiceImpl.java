@@ -7,8 +7,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-
 /**
  * Сервис для получения авторизованного пользователя
  *
@@ -23,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         return repository.findByPhone(login)
-                .map(user -> new AuthorizedUser(user.getId(), user.getUsername(), user.getPassword(), Collections.singleton(user.getRole())))
+                .map(AuthorizedUser::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User: " + login + " not found!"));
     }
 

@@ -15,7 +15,6 @@ public abstract class AbstractPhoneVerificationService implements PhoneVerificat
     @Override
     public boolean verify(String phone, String code) {
         boolean valid = isValid(phone, code);
-
         if (valid) {
             Claims claims = Jwts.claims();
             claims.put(ClaimConstants.VERIFIED_PHONE, phone);
