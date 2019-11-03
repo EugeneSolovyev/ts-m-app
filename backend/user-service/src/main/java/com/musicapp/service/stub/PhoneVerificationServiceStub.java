@@ -1,5 +1,6 @@
 package com.musicapp.service.stub;
 
+import com.musicapp.domain.PhoneVerificationType;
 import com.musicapp.service.AbstractPhoneVerificationService;
 import com.musicapp.service.TokenService;
 import com.musicapp.util.constants.ProfileConstants;
@@ -19,7 +20,7 @@ public class PhoneVerificationServiceStub extends AbstractPhoneVerificationServi
     }
 
     @Override
-    public void sendCode(String phone, String type) {
+    public void sendCode(String phone, PhoneVerificationType type) {
         log.debug("sendCode stub");
     }
 

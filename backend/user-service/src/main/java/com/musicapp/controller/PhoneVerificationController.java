@@ -1,5 +1,6 @@
 package com.musicapp.controller;
 
+import com.musicapp.domain.PhoneVerificationType;
 import com.musicapp.dto.PhoneCodeDto;
 import com.musicapp.dto.PhoneDto;
 import com.musicapp.dto.TokenDto;
@@ -34,10 +35,11 @@ public class PhoneVerificationController {
      * Отправка кода подтверждения номера телефона пользователя
      *
      * @param phoneDto DTO номера телефона пользователя
-     * @param type     тип отправки (sms, voice)
+     * @param type     тип отправки кода подтверждения номера телефона пользователя
      */
     @PostMapping(value = "/{type}/send-code", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void sendCode(@Validated(PhoneSequence.class) @RequestBody PhoneDto phoneDto, @PathVariable String type) {
+    public void sendCode(@Validated(PhoneSequence.class) @RequestBody PhoneDto phoneDto,
+                         @PathVariable PhoneVerificationType type) {
         service.sendCode(phoneDto.getPhone(), type);
     }
 

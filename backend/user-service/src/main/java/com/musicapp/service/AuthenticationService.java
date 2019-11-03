@@ -10,8 +10,8 @@ public interface AuthenticationService {
     /**
      * Аутентификация
      *
-     * @param username - имя пользователя
-     * @param password - пароль
+     * @param username имя пользователя
+     * @param password пароль
      * @return jwt токен
      */
     String authenticate(String username, String password);

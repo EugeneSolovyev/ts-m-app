@@ -19,9 +19,6 @@ public enum Role implements GrantedAuthority {
      */
     ROLE_USER;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getAuthority() {
         return name();

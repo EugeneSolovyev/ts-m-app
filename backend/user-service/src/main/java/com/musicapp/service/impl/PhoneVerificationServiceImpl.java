@@ -4,6 +4,7 @@ import com.authy.AuthyApiClient;
 import com.authy.api.Params;
 import com.authy.api.Verification;
 import com.google.i18n.phonenumbers.Phonenumber;
+import com.musicapp.domain.PhoneVerificationType;
 import com.musicapp.exception.PhoneVerificationException;
 import com.musicapp.service.AbstractPhoneVerificationService;
 import com.musicapp.service.TokenService;
@@ -29,14 +30,14 @@ public class PhoneVerificationServiceImpl extends AbstractPhoneVerificationServi
     }
 
     @Override
-    public void sendCode(String phone, String type) {
+    public void sendCode(String phone, PhoneVerificationType type) {
         Phonenumber.PhoneNumber phoneNumber = PhoneUtils.parse(phone);
 
         Params params = new Params();
         Verification response = authyApiClient.getPhoneVerification().start(
                 String.valueOf(phoneNumber.getNationalNumber()),
                 String.valueOf(phoneNumber.getCountryCode()),
-                type,
+                type.name(),
                 params
         );
 
