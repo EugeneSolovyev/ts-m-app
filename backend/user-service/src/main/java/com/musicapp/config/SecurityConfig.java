@@ -1,6 +1,7 @@
 package com.musicapp.config;
 
 import com.musicapp.security.filter.AuthenticationTokenFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,15 +25,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     private final AuthenticationTokenFilter authenticationTokenFilter;
     private final UserDetailsService userDetailsService;
-
-    public SecurityConfig(AuthenticationTokenFilter authenticationTokenFilter,
-                          UserDetailsService userDetailsService) {
-        this.authenticationTokenFilter = authenticationTokenFilter;
-        this.userDetailsService = userDetailsService;
-    }
 
     /**
      * {@inheritDoc}

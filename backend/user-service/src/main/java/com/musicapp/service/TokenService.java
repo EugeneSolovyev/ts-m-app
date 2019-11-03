@@ -1,7 +1,7 @@
 package com.musicapp.service;
 
-import io.jsonwebtoken.Claims;
 import com.musicapp.security.AuthorizedUser;
+import io.jsonwebtoken.Claims;
 
 import java.util.Optional;
 
@@ -15,7 +15,7 @@ public interface TokenService {
     /**
      * Получение авторизованного пользователя из jwt токена
      *
-     * @param token - jwt токен
+     * @param token jwt токен
      * @return сущность пользователя
      */
     Optional<AuthorizedUser> getAuthorizedUser(String token);
@@ -23,7 +23,7 @@ public interface TokenService {
     /**
      * Генерация jwt токена из авторизованного пользователя
      *
-     * @param authorizedUser - авторизованный пользователь
+     * @param authorizedUser авторизованный пользователь
      * @return jwt токен
      */
     String generate(AuthorizedUser authorizedUser);
@@ -31,7 +31,7 @@ public interface TokenService {
     /**
      * Генерация кастомного jwt токена из параметров
      *
-     * @param claims - параметры
+     * @param claims параметры
      * @return jwt токен
      */
     String generate(Claims claims);

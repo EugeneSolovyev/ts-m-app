@@ -4,20 +4,19 @@ import com.authy.AuthyApiClient;
 import com.authy.api.Params;
 import com.authy.api.Verification;
 import com.google.i18n.phonenumbers.Phonenumber;
-import com.musicapp.util.constants.Profiles;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import com.musicapp.exception.PhoneVerificationException;
 import com.musicapp.security.context.TokenContextHolder;
 import com.musicapp.service.PhoneVerificationService;
 import com.musicapp.service.TokenService;
 import com.musicapp.util.PhoneUtils;
+import com.musicapp.util.constants.ClaimConstants;
+import com.musicapp.util.constants.ProfileConstants;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-
-import static com.musicapp.util.constants.TokenConstants.Claims.VERIFIED_PHONE;
 
 /**
  * Реализация сервиса верификации номера телефона пользователя
@@ -25,25 +24,13 @@ import static com.musicapp.util.constants.TokenConstants.Claims.VERIFIED_PHONE;
  * @author evgeniycheban
  */
 @Service
-@Profile(Profiles.PROD)
+@Profile(ProfileConstants.PROD)
+@RequiredArgsConstructor
 public class PhoneVerificationServiceImpl implements PhoneVerificationService {
+
     private final AuthyApiClient authyApiClient;
     private final TokenService tokenService;
 
-    /**
-     * @param authyApiClient - authy api клиент
-     * @param tokenService   - сервис для работы с jwt
-     */
-    @Autowired
-    public PhoneVerificationServiceImpl(AuthyApiClient authyApiClient,
-                                        TokenService tokenService) {
-        this.authyApiClient = authyApiClient;
-        this.tokenService = tokenService;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void sendCode(String phone, String type) {
         Phonenumber.PhoneNumber phoneNumber = PhoneUtils.parse(phone);
@@ -61,9 +48,6 @@ public class PhoneVerificationServiceImpl implements PhoneVerificationService {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean verify(String phone, String code) {
         Phonenumber.PhoneNumber phoneNumber = PhoneUtils.parse(phone);
@@ -78,7 +62,7 @@ public class PhoneVerificationServiceImpl implements PhoneVerificationService {
 
         if (verified) {
             Claims claims = Jwts.claims();
-            claims.put(VERIFIED_PHONE, phone);
+            claims.put(ClaimConstants.VERIFIED_PHONE, phone);
             String token = tokenService.generate(claims);
             TokenContextHolder.setToken(token);
         }
@@ -86,9 +70,6 @@ public class PhoneVerificationServiceImpl implements PhoneVerificationService {
         return verified;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean isVerified(String phone) {
         String token = TokenContextHolder.getToken();
@@ -97,7 +78,7 @@ public class PhoneVerificationServiceImpl implements PhoneVerificationService {
         }
 
         Claims claims = tokenService.getClaims(token);
-        String verifiedPhone = claims.get(VERIFIED_PHONE, String.class);
+        String verifiedPhone = claims.get(ClaimConstants.VERIFIED_PHONE, String.class);
 
         return phone.equals(verifiedPhone);
     }

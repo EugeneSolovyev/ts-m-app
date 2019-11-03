@@ -14,17 +14,6 @@ import javax.validation.ConstraintValidatorContext;
  */
 public class PhoneFormatValidator implements ConstraintValidator<PhoneFormat, String> {
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void initialize(PhoneFormat constraintAnnotation) {
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean isValid(String phone, ConstraintValidatorContext context) {
         try {

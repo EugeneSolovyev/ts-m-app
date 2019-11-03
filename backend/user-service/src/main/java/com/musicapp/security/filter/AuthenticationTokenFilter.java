@@ -2,8 +2,7 @@ package com.musicapp.security.filter;
 
 import com.musicapp.security.context.TokenContextHolder;
 import com.musicapp.service.TokenService;
-import com.musicapp.util.constants.TokenConstants;
-import org.apache.commons.lang3.StringUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,30 +21,24 @@ import java.io.IOException;
  * @author evgeniycheban
  */
 @Component
+@RequiredArgsConstructor
 public class AuthenticationTokenFilter extends OncePerRequestFilter {
+
+    private static final String TOKEN_PREFIX = "Bearer ";
+
     private final TokenService tokenService;
 
-    /**
-     * @param tokenService - сервис для работы с jwt токеном
-     */
-    public AuthenticationTokenFilter(TokenService tokenService) {
-        this.tokenService = tokenService;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void doFilterInternal(HttpServletRequest request,
                                  HttpServletResponse response,
                                  FilterChain chain) throws IOException, ServletException {
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (header == null || !header.startsWith(TokenConstants.TOKEN_PREFIX)) {
+        if (header == null || !header.startsWith(TOKEN_PREFIX)) {
             chain.doFilter(request, response);
             return;
         }
 
-        String token = header.replace(TokenConstants.TOKEN_PREFIX, StringUtils.EMPTY);
+        String token = header.replace(TOKEN_PREFIX, "");
         TokenContextHolder.setToken(token);
         tokenService.getAuthorizedUser(token)
                 .map(user -> new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()))

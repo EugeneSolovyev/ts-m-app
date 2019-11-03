@@ -1,5 +1,6 @@
 package com.musicapp.config.properties;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -8,36 +9,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author evgeniycheban
  */
 @ConfigurationProperties("token")
+@Data
 public class TokenServiceProperties {
+
+    /**
+     * jwt ключ
+     */
     private String secret;
 
+    /**
+     * срок действия jwt
+     */
     private Long expiration;
 
-    /**
-     * @return секретное слово jwt
-     */
-    public String getSecret() {
-        return secret;
-    }
-
-    /**
-     * @param secret - секретное слово jwt
-     */
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
-
-    /**
-     * @return срок действия jwt
-     */
-    public Long getExpiration() {
-        return expiration;
-    }
-
-    /**
-     * @param expiration - срок действия jwt
-     */
-    public void setExpiration(Long expiration) {
-        this.expiration = expiration;
-    }
 }

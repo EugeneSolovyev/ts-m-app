@@ -4,29 +4,23 @@ import com.musicapp.domain.DomainEvent;
 import com.musicapp.domain.DomainEventType;
 import com.musicapp.domain.User;
 import com.musicapp.dto.CheckPhoneDto;
-import com.musicapp.dto.PaginationRequestDto;
-import com.musicapp.dto.PhoneCodeDto;
 import com.musicapp.dto.PhoneDto;
 import com.musicapp.dto.UserDto;
 import com.musicapp.projection.UserProfileProjection;
-import com.musicapp.security.AuthorizedUser;
 import com.musicapp.service.UserService;
 import com.musicapp.stream.UserStream;
 import com.musicapp.validation.group.UsernameNotBlankGroup;
-import com.musicapp.validation.sequence.PhoneCodeSequence;
 import com.musicapp.validation.sequence.PhoneFormatSequence;
 import com.musicapp.validation.sequence.PhoneVerifiedSequence;
 import com.musicapp.validation.sequence.SamePasswordSequence;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.data.domain.Page;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,25 +33,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/users")
 @EnableBinding(UserStream.class)
+@RequiredArgsConstructor
 public class UserController {
+
     private final UserService service;
     private final UserStream stream;
 
     /**
-     * @param service - сервис для работы с пользователями
-     * @param stream  - поток для записи в message broker
-     */
-    @Autowired
-    public UserController(UserService service,
-                          UserStream stream) {
-        this.service = service;
-        this.stream = stream;
-    }
-
-    /**
-     * Валидация и создание нового пользователя с отправкой в Kafka
+     * Валидация и создание нового пользователя с отправкой в message broker
      *
-     * @param userDto - DTO сущности пользователя
+     * @param userDto DTO сущности пользователя
      */
     @PostMapping
     public void create(@Validated({
@@ -74,21 +59,9 @@ public class UserController {
     }
 
     /**
-     * Валидация и редактирование номера телефона пользователя
-     *
-     * @param phoneCodeDto - DTO (номер + код)
-     */
-    @PutMapping("/edit-phone")
-    public void editPhone(@Validated(PhoneCodeSequence.class) @RequestBody PhoneCodeDto phoneCodeDto) {
-        Long id = AuthorizedUser.id();
-        String phone = phoneCodeDto.getPhone();
-        service.editPhone(phone, id);
-    }
-
-    /**
      * Валидация и проверка существования пользователя по номеру телефона
      *
-     * @param phoneDto - номер
+     * @param phoneDto DTO номера телефона пользователя
      * @return ответ с признаком существования пользователя
      */
     @PostMapping("/check-phone")
@@ -99,35 +72,14 @@ public class UserController {
     }
 
     /**
-     * Блокировка пользователя по идентификатору
-     *
-     * @param id - идентификатор пользователя
-     */
-    @PostMapping("/block/{id}")
-    public void block(@PathVariable Long id) {
-        // TODO: implementation
-    }
-
-    /**
      * Получение профиля пользователя по идентификатору
      *
-     * @param id - идентификатор пользователя
+     * @param id идентификатор пользователя
      * @return профиль пользователя
      */
     @GetMapping("/{id}")
     public UserProfileProjection getProfile(@PathVariable Long id) {
         return service.getProfile(id);
-    }
-
-    /**
-     * Получение пользователей
-     *
-     * @param request - запрос с параметрами пагинации
-     * @return страница пользователей
-     */
-    @GetMapping
-    public Page<UserProfileProjection> getAll(PaginationRequestDto request) {
-        return service.getAll(request);
     }
 
 }

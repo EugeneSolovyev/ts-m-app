@@ -1,47 +1,23 @@
 package com.musicapp.domain;
 
+import lombok.Data;
+
 /**
  * Доменное событие
  *
  * @author evgeniycheban
  */
+@Data
 public class DomainEvent<T> {
 
+    /**
+     * объект доменного события
+     */
     private final T subject;
+
+    /**
+     * тип доменного события
+     */
     private final DomainEventType type;
-
-    /**
-     * @param subject - предмет доменного события
-     * @param type    - тип доменного события
-     */
-    public DomainEvent(T subject, DomainEventType type) {
-        this.subject = subject;
-        this.type = type;
-    }
-
-    /**
-     * @return предмет доменного события
-     */
-    public T getSubject() {
-        return subject;
-    }
-
-    /**
-     * @return тип доменного события
-     */
-    public DomainEventType getType() {
-        return type;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "DomainEvent{" +
-                "subject=" + subject +
-                ", type=" + type +
-                '}';
-    }
 
 }

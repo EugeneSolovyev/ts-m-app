@@ -1,16 +1,14 @@
 package com.musicapp.service.impl;
 
+import com.musicapp.domain.Role;
 import com.musicapp.domain.User;
-import com.musicapp.dto.PaginationRequestDto;
 import com.musicapp.dto.UserDto;
+import com.musicapp.mapper.UserMapper;
 import com.musicapp.projection.UserProfileProjection;
 import com.musicapp.repository.UserRepository;
 import com.musicapp.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,65 +21,31 @@ import java.util.function.Consumer;
  */
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
     private final UserRepository repository;
-    private final ConversionService conversionService;
+    private final UserMapper mapper;
+    private final PasswordEncoder encoder;
 
-    /**
-     * @param repository        - репозиторий для работы с таблицей пользователей
-     * @param conversionService - сервис конвертер
-     */
-    @Autowired
-    public UserServiceImpl(UserRepository repository,
-                           ConversionService conversionService) {
-        this.repository = repository;
-        this.conversionService = conversionService;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @Transactional
-    public void create(UserDto userDto, Consumer<User> callback) {
-        User user = conversionService.convert(userDto, User.class);
+    public void create(UserDto userDto, Consumer<User> userConsumer) {
+        User user = mapper.map(userDto);
+        user.setRole(Role.ROLE_USER);
+        user.setPassword(encoder.encode(user.getPassword()));
         repository.save(user);
-        callback.accept(user);
+        userConsumer.accept(user);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean checkPhone(String phone) {
         return repository.existsByPhone(phone);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional
-    public void editPhone(String phone, Long id) {
-        repository.updatePhone(phone, id);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public UserProfileProjection getProfile(Long id) {
         return repository.findById(id, UserProfileProjection.class);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Page<UserProfileProjection> getAll(PaginationRequestDto request) {
-        Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
-
-        return repository.getAll(pageable);
     }
 
 }

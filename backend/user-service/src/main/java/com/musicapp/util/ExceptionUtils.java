@@ -1,38 +1,22 @@
 package com.musicapp.util;
 
-import java.util.function.Supplier;
+import lombok.experimental.UtilityClass;
 
 /**
- * Вспомогательные методы для работы с исключениями/условиями
+ * Вспомогательные методы для работы с исключениями
  *
  * @author evgeniycheban
  */
-public final class ExceptionUtils {
-    private ExceptionUtils() {
-        // utils
-    }
+@UtilityClass
+public class ExceptionUtils {
 
     /**
-     * Проверяет, что переданное условие == true, иначе бросает переданное исключение
+     * Получение корневого исключения
      *
-     * @param <X>               - тип исключения
-     * @param condition         - условие
-     * @param exceptionSupplier - поставщик исключения
-     * @throws X - если условие != true
+     * @param throwable исключение
+     * @return корневое исключение
      */
-    public static <X extends Throwable> void checkOrElseThrow(boolean condition, Supplier<? extends X> exceptionSupplier) throws X {
-        if (!condition) {
-            throw exceptionSupplier.get();
-        }
-    }
-
-    /**
-     * Получение корневой ошибки
-     *
-     * @param throwable - ошибка
-     * @return корневая ошибка
-     */
-    public static Throwable getRootCause(Throwable throwable) {
+    public Throwable getRootCause(Throwable throwable) {
         Throwable result = throwable;
         Throwable cause;
 

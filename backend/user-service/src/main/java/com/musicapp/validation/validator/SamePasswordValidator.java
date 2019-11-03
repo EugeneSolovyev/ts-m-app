@@ -14,17 +14,11 @@ import javax.validation.ConstraintValidatorContext;
 public class SamePasswordValidator implements ConstraintValidator<SamePassword, UserDto> {
     private String message;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void initialize(SamePassword constraintAnnotation) {
         this.message = constraintAnnotation.message();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean isValid(UserDto userDto, ConstraintValidatorContext context) {
         boolean valid = userDto.getPassword().equals(userDto.getRepeatPassword());

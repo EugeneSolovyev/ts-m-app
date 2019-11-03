@@ -1,5 +1,6 @@
 package com.musicapp.config.properties;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -8,6 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author evgeniycheban
  */
 @ConfigurationProperties("authy")
+@Data
 public class AuthyApiClientProperties {
 
     /**
@@ -15,17 +17,4 @@ public class AuthyApiClientProperties {
      */
     private String apiKey;
 
-    /**
-     * @return api ключ
-     */
-    public String getApiKey() {
-        return apiKey;
-    }
-
-    /**
-     * @param apiKey - api ключ
-     */
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
-    }
 }

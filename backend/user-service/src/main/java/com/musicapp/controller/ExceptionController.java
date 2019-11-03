@@ -2,9 +2,9 @@ package com.musicapp.controller;
 
 import com.musicapp.exception.NotFoundException;
 import com.musicapp.util.ExceptionUtils;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.internal.engine.path.NodeImpl;
 import org.hibernate.validator.internal.engine.path.PathImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -13,11 +13,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -27,6 +35,7 @@ import java.util.stream.Collectors;
  */
 @ControllerAdvice(annotations = RestController.class)
 @ResponseBody
+@RequiredArgsConstructor
 public class ExceptionController {
 
     private static final Map<String, String> CONSTRAINT_CODE_MAP = new HashMap<String, String>() {
@@ -40,17 +49,9 @@ public class ExceptionController {
     private final MessageSource messageSource;
 
     /**
-     * @param messageSource - хранилище сообщений
-     */
-    @Autowired
-    public ExceptionController(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
-
-    /**
      * Обработка ошибок валидации
      *
-     * @param e - ошибка валидации
+     * @param e ошибка валидации
      * @return ошибки валидации в формате название поля - сообщение об ошибке
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -65,7 +66,7 @@ public class ExceptionController {
     /**
      * Обработка ошибок валидации
      *
-     * @param e - ошибка валидации
+     * @param e ошибка валидации
      * @return ошибки валидации в формате название поля - сообщение об ошибке
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -79,7 +80,7 @@ public class ExceptionController {
     /**
      * Обработка конфликтов
      *
-     * @param e - ошибка конфликта
+     * @param e ошибка конфликта
      * @return ошибки конликтов в формате название поля - сообщение об ошибке
      */
     @ResponseStatus(HttpStatus.CONFLICT)
@@ -96,7 +97,7 @@ public class ExceptionController {
     /**
      * Обработка ошибок при отсутствии сущности в бд.
      *
-     * @param e - ошибка при отсутствии сущности в бд.
+     * @param e ошибка при отсутствии сущности в бд.
      * @return ошибки при отсутствии сущности в бд, в формате название поля - сообщение об ошибке
      */
     @ResponseStatus(HttpStatus.NOT_FOUND)

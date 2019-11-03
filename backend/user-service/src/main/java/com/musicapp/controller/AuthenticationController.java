@@ -1,9 +1,9 @@
 package com.musicapp.controller;
 
-import com.musicapp.service.AuthenticationService;
 import com.musicapp.dto.AuthenticationRequestDto;
 import com.musicapp.dto.AuthenticationResponseDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.musicapp.service.AuthenticationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,19 +18,13 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthenticationController {
+
     private final AuthenticationService service;
 
     /**
-     * @param service - сервис авторизации
-     */
-    @Autowired
-    public AuthenticationController(AuthenticationService service) {
-        this.service = service;
-    }
-
-    /**
-     * @param request - DTO сущности пользователя (username + password)
+     * @param request DTO запроса авторизации
      * @return ответ с jwt токеном авторизации
      */
     @PostMapping
