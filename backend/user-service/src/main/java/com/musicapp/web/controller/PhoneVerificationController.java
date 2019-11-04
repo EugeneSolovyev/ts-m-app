@@ -1,4 +1,4 @@
-package com.musicapp.controller;
+package com.musicapp.web.controller;
 
 import com.musicapp.domain.PhoneVerificationType;
 import com.musicapp.dto.PhoneCodeDto;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * REST API для верификации номера телефона пользователя
+ * Методы для верификации номера телефона.
  *
  * @author evgeniycheban
  */
@@ -32,7 +32,7 @@ public class PhoneVerificationController {
     private final PhoneVerificationService service;
 
     /**
-     * Отправка кода подтверждения номера телефона пользователя
+     * Метод для отправки кода подтверждения на номер телефона.
      *
      * @param phoneDto DTO номера телефона пользователя
      * @param type     тип отправки кода подтверждения номера телефона пользователя
@@ -44,9 +44,9 @@ public class PhoneVerificationController {
     }
 
     /**
-     * Проверка кода подтверждения номера телефона пользователя
+     * Метод для проверки номера телефона и кода подтверждения.
      *
-     * @param phoneCodeDto DTO номера телефона пользователя с кодом подтверждения
+     * @param phoneCodeDto dto номера телефона с кодом подтверждения
      * @return ответ с jwt токеном
      */
     @PostMapping(value = "/check-phone-code")

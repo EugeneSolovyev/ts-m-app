@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 /**
- * Реализация сервиса аутентификации
+ * Реализация сервиса аутентификации.
  *
  * @author evgeniycheban
  */

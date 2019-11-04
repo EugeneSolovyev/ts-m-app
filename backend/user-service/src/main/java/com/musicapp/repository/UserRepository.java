@@ -8,14 +8,14 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.Optional;
 
 /**
- * Репоизторий для работы с таблицей пользователей
+ * Репоизторий для работы с таблицей пользователей.
  *
  * @author evgeniycheban
  */
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
     /**
-     * Поиск пользователя по номеру телефона
+     * Возвращает пользователя по номеру телефона.
      *
      * @param phone номер телефона пользователя
      * @return Optional пользователь
@@ -23,7 +23,7 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     Optional<AuthorizedUserProjection> findByPhone(String phone);
 
     /**
-     * Получение пользователя по идентификатору
+     * Возвращает пользователя по идентификатору.
      *
      * @param id   идентификатор пользователя
      * @param type тип проекции
@@ -32,7 +32,7 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     <T> T findById(Long id, Class<T> type);
 
     /**
-     * Проверка на существование пользователя по номеру телефона
+     * Проверяет существование пользователя по номеру телефона.
      *
      * @param phone номер телефона
      * @return true если пользователь существует

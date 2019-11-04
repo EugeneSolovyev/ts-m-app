@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Конфигурация безопасности приложения
+ * Конфигурация безопасности приложения.
  *
  * @author evgeniycheban
  */
@@ -46,13 +46,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthenticationTokenFilter authenticationTokenFilter;
     private final UserDetailsService userDetailsService;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.
-                csrf()
+        http
+                .csrf()
                 .disable()
                 .exceptionHandling()
                 .authenticationEntryPoint((req, res, e) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED))
@@ -70,27 +67,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
-    /**
-     * @return бин для хэширования пароля
-     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

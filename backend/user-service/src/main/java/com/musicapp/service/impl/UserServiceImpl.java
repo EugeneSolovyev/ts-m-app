@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.function.Consumer;
 
 /**
- * Реализация сервиса для управления пользователями
+ * Реализация сервиса для управления пользователями.
  *
  * @author evgeniycheban
  */

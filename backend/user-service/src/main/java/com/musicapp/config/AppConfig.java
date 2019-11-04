@@ -7,7 +7,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 /**
- * Конфигурация приложения
+ * Конфигурация приложения.
  *
  * @author evgeniycheban
  */
@@ -15,7 +15,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 public class AppConfig {
 
     /**
-     * @return источник сообщений ошибок валидации
+     * Источник сообщений для ошибок валидации.
      */
     @Bean
     public MessageSource messageSource() {
@@ -26,7 +26,7 @@ public class AppConfig {
     }
 
     /**
-     * @return фабрика валидаторов
+     * Фабрика валидаторов.
      */
     @Bean
     public LocalValidatorFactoryBean validator() {

@@ -3,7 +3,7 @@ package com.musicapp.util;
 import lombok.experimental.UtilityClass;
 
 /**
- * Вспомогательные методы для работы с исключениями
+ * Вспомогательные методы для работы с исключениями.
  *
  * @author evgeniycheban
  */
@@ -11,9 +11,9 @@ import lombok.experimental.UtilityClass;
 public class ExceptionUtils {
 
     /**
-     * Получение корневого исключения
+     * Получение корневого исключения.
      *
-     * @param throwable исключение
+     * @param throwable исключение.
      * @return корневое исключение
      */
     public Throwable getRootCause(Throwable throwable) {

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Фильтр для проверки jwt токена в заголовке запроса
+ * Фильтр для проверки jwt токена в заголовке запроса.
  *
  * @author evgeniycheban
  */

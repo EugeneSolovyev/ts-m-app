@@ -3,7 +3,7 @@ package com.musicapp.util.constants;
 import lombok.experimental.UtilityClass;
 
 /**
- * Константы для работы с jwt
+ * Константы параметров jwt токена.
  *
  * @author evgeniycheban
  */
@@ -11,23 +11,23 @@ import lombok.experimental.UtilityClass;
 public class ClaimConstants {
 
     /**
-     * Идентификатор пользователя
+     * Идентификатор пользователя.
      */
-    public final String ID = "id";
+    public final String id = "id";
 
     /**
-     * Имя пользователя
+     * Имя пользователя.
      */
-    public final String USERNAME = "username";
+    public final String username = "username";
 
     /**
-     * Роли пользователя
+     * Роли пользователя.
      */
-    public final String ROLES = "roles";
+    public final String roles = "roles";
 
     /**
-     * Верифицированный номер телефона пользователя
+     * Верифицированный номер телефона пользователя.
      */
-    public final String VERIFIED_PHONE = "verifiedPhone";
+    public final String verifiedPhone = "verifiedPhone";
 
 }

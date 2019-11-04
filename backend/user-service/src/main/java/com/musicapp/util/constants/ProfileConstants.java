@@ -3,7 +3,7 @@ package com.musicapp.util.constants;
 import lombok.experimental.UtilityClass;
 
 /**
- * Константы профилей приложения
+ * Константы профилей приложения.
  *
  * @author evgeniycheban
  */
@@ -11,13 +11,13 @@ import lombok.experimental.UtilityClass;
 public class ProfileConstants {
 
     /**
-     * Локальный профиль
+     * Локальный профиль.
      */
-    public final String LOCAL = "local";
+    public final String local = "local";
 
     /**
-     * Продуктивный профиль
+     * Продуктивный профиль.
      */
-    public final String PROD = "prod";
+    public final String prod = "prod";
 
 }

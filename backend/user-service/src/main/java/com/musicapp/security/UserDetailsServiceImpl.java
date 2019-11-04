@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
- * Сервис для получения авторизованного пользователя
+ * Реализация сервиса для получения авторизованного пользователя.
  *
  * @author evgeniycheban
  */

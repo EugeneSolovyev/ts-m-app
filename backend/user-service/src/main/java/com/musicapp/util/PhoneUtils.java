@@ -7,7 +7,7 @@ import com.musicapp.exception.PhoneParseException;
 import lombok.experimental.UtilityClass;
 
 /**
- * Вспомогательный класс для работы с телефонами
+ * Вспомогательный класс для работы с телефонами.
  *
  * @author evgeniycheban
  */
@@ -15,9 +15,9 @@ import lombok.experimental.UtilityClass;
 public class PhoneUtils {
 
     /**
-     * Парсинг номера телефона пользователя
+     * Парсинг номера телефона.
      *
-     * @param phone номер телефона пользователя
+     * @param phone номер телефона
      * @return объект PhoneNumber
      */
     public Phonenumber.PhoneNumber parse(String phone) {
@@ -25,9 +25,9 @@ public class PhoneUtils {
     }
 
     /**
-     * Парсинг номера телефона пользователя
+     * Парсинг номера телефона.
      *
-     * @param phone         номер телефона пользователя
+     * @param phone         номер телефона
      * @param defaultRegion регион по умолчанию
      * @return объект PhoneNumber
      */
@@ -40,10 +40,10 @@ public class PhoneUtils {
     }
 
     /**
-     * Проверка на валидность номера телефона пользователя
+     * Проверка на валидность номера телефона.
      *
-     * @param phone номер телефона пользователя
-     * @return true если номер телефона пользователя валиден
+     * @param phone номер телефона
+     * @return true если номер телефона валиден
      */
     public boolean isValid(String phone) {
         Phonenumber.PhoneNumber phoneNumber = parse(phone);

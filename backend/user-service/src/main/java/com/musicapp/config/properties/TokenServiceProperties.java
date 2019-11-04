@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Параметры конфигурации сервиса для работы с jwt
+ * Параметры конфигурации сервиса для работы с jwt.
  *
  * @author evgeniycheban
  */
@@ -12,14 +12,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class TokenServiceProperties {
 
-    /**
-     * jwt ключ
-     */
     private String secret;
 
-    /**
-     * срок действия jwt
-     */
     private Long expiration;
 
 }

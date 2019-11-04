@@ -17,9 +17,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.Collections;
 import java.util.List;
 
-
 /**
- * Конфигурация Swagger
+ * Конфигурация Swagger.
  */
 @Configuration
 @EnableSwagger2
@@ -29,6 +28,9 @@ public class SwaggerConfig {
 
     private final SwaggerConfigProperties properties;
 
+    /**
+     * Конфигурация Springfox.
+     */
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -36,7 +38,7 @@ public class SwaggerConfig {
                 .securityContexts(Collections.singletonList(securityContext()))
                 .securitySchemes(Collections.singletonList(apiKey()))
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.musicapp.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.musicapp.web.controller"))
                 .build();
     }
 

@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Сервис для работы с jwt токеном
+ * Реализация сервиса для работы с jwt токеном.
  *
  * @author evgeniycheban
  */
@@ -30,14 +30,14 @@ public class TokenServiceImpl implements TokenService {
     public Optional<AuthorizedUser> getAuthorizedUser(String token) {
         Claims claims = getClaims(token);
 
-        Long id = claims.get(ClaimConstants.ID, Long.class);
+        Long id = claims.get(ClaimConstants.id, Long.class);
         if (id == null) {
             return Optional.empty();
         }
 
-        String username = claims.get(ClaimConstants.USERNAME, String.class);
+        String username = claims.get(ClaimConstants.username, String.class);
 
-        List<?> roles = claims.get(ClaimConstants.ROLES, List.class);
+        List<?> roles = claims.get(ClaimConstants.roles, List.class);
         Set<Role> authorities = roles.stream()
                 .map(role -> Role.valueOf((String) role))
                 .collect(Collectors.toSet());
@@ -48,9 +48,9 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public String generate(AuthorizedUser authorizedUser) {
         Claims claims = Jwts.claims();
-        claims.put(ClaimConstants.ID, authorizedUser.getId());
-        claims.put(ClaimConstants.USERNAME, authorizedUser.getUsername());
-        claims.put(ClaimConstants.ROLES, authorizedUser.getAuthorities());
+        claims.put(ClaimConstants.id, authorizedUser.getId());
+        claims.put(ClaimConstants.username, authorizedUser.getUsername());
+        claims.put(ClaimConstants.roles, authorizedUser.getAuthorities());
 
         return generate(claims);
     }

@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * Проверка кода подтверждения номера телефона пользователя
+ * Валидатор для проверки номера телефона и кода подтверждения.
  *
  * @author evgeniycheban
  */

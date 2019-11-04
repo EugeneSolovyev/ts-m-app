@@ -1,4 +1,4 @@
-package com.musicapp.controller;
+package com.musicapp.web.handler;
 
 import com.musicapp.util.ExceptionUtils;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +27,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Контроллер-обработчик ошибок
+ * Обработчик ошибок.
  *
  * @author evgeniycheban
  */
 @ControllerAdvice(annotations = RestController.class)
 @ResponseBody
 @RequiredArgsConstructor
-public class ExceptionController {
+public class ExceptionInfoHandler {
 
     private static final Map<String, String> CONSTRAINT_CODE_MAP = new HashMap<String, String>() {
         {
@@ -47,7 +47,7 @@ public class ExceptionController {
     private final MessageSource messageSource;
 
     /**
-     * Обработка ошибок валидации
+     * Обрабатывает ошибки валидации.
      *
      * @param e ошибка валидации
      * @return ошибки валидации в формате название поля - сообщение об ошибке
@@ -58,11 +58,12 @@ public class ExceptionController {
         BindingResult bindingResult = e.getBindingResult();
         List<FieldError> errors = bindingResult.getFieldErrors();
 
-        return errors.stream().collect(Collectors.toMap(FieldError::getField, DefaultMessageSourceResolvable::getDefaultMessage));
+        return errors.stream()
+                .collect(Collectors.toMap(FieldError::getField, DefaultMessageSourceResolvable::getDefaultMessage));
     }
 
     /**
-     * Обработка ошибок валидации
+     * Обрабатывает ошибки валидации.
      *
      * @param e ошибка валидации
      * @return ошибки валидации в формате название поля - сообщение об ошибке
@@ -72,11 +73,12 @@ public class ExceptionController {
     public Map<String, String> handleValidationError(ConstraintViolationException e) {
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
 
-        return constraintViolations.stream().collect(Collectors.toMap(this::getFieldName, ConstraintViolation::getMessage));
+        return constraintViolations.stream()
+                .collect(Collectors.toMap(this::getFieldName, ConstraintViolation::getMessage));
     }
 
     /**
-     * Обработка конфликтов
+     * Обрабатывает ошибки конфликтов.
      *
      * @param e ошибка конфликта
      * @return ошибки конликтов в формате название поля - сообщение об ошибке

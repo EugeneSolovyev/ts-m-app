@@ -1,4 +1,4 @@
-package com.musicapp.controller;
+package com.musicapp.web.controller;
 
 import com.musicapp.domain.DomainEvent;
 import com.musicapp.domain.DomainEventType;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * REST API для работы с пользователями
+ * Методы для работы с пользователями.
  *
  * @author evgeniycheban
  */
@@ -40,7 +40,7 @@ public class UserController {
     private final UserStream stream;
 
     /**
-     * Валидация и создание нового пользователя с отправкой в message broker
+     * Метод валидирует и создаёт нового пользователя с отправкой в message broker.
      *
      * @param userDto DTO сущности пользователя
      */
@@ -59,7 +59,7 @@ public class UserController {
     }
 
     /**
-     * Валидация и проверка существования пользователя по номеру телефона
+     * Метод валидирует и проверяет существование пользователя по номеру телефона.
      *
      * @param phoneDto DTO номера телефона пользователя
      * @return ответ с признаком существования пользователя
@@ -72,7 +72,7 @@ public class UserController {
     }
 
     /**
-     * Получение профиля пользователя по идентификатору
+     * Метод возвращает профиль пользователя по идентификатору.
      *
      * @param id идентификатор пользователя
      * @return профиль пользователя

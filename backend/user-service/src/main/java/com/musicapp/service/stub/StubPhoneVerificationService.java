@@ -8,14 +8,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+/**
+ * Заглушка для сервиса верификации номера телефона.
+ */
 @Service
-@Profile(ProfileConstants.LOCAL)
+@Profile(ProfileConstants.local)
 @Slf4j
-public class PhoneVerificationServiceStub extends AbstractPhoneVerificationService {
+public class StubPhoneVerificationService extends AbstractPhoneVerificationService {
 
     private static final String STUB_PHONE_CODE = "9999";
 
-    public PhoneVerificationServiceStub(TokenService tokenService) {
+    public StubPhoneVerificationService(TokenService tokenService) {
         super(tokenService);
     }
 

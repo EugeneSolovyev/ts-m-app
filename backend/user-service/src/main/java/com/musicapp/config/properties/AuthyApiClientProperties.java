@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Параметры конфигурации authy клиента
+ * Параметры конфигурации Authy клиента.
  *
  * @author evgeniycheban
  */
@@ -12,9 +12,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class AuthyApiClientProperties {
 
-    /**
-     * api ключ
-     */
     private String apiKey;
 
 }

@@ -11,7 +11,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Проверка на верифицированность номера телефона пользователя
+ * Аннотация для проверки на верифицированность номера телефона.
  *
  * @author evgeniycheban
  */
@@ -20,9 +20,26 @@ import java.lang.annotation.Target;
 @Documented
 @Constraint(validatedBy = PhoneVerifiedValidator.class)
 public @interface PhoneVerified {
+
+    /**
+     * Возвращает валидационное сообщение.
+     *
+     * @return валидационное сообщение
+     */
     String message() default "{user.phone.unverified}";
 
+    /**
+     * Возвращает группы валидации.
+     *
+     * @return группы валидации
+     */
     Class<?>[] groups() default {};
 
+    /**
+     * Возвращает payload.
+     *
+     * @return payload
+     */
     Class<? extends Payload>[] payload() default {};
+
 }

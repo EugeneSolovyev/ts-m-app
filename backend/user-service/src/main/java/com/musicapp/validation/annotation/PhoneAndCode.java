@@ -11,7 +11,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Проверка кода подтверждения номера телефона пользователя
+ * Аннотация для проверки кода подтверждения номера телефона.
  *
  * @author evgeniycheban
  */
@@ -20,9 +20,25 @@ import java.lang.annotation.Target;
 @Documented
 @Constraint(validatedBy = PhoneAndCodeValidator.class)
 public @interface PhoneAndCode {
+
+    /**
+     * Возвращает валидационное сообщение.
+     *
+     * @return валидационное сообщение
+     */
     String message() default "{user.phoneCode.incorrect}";
 
+    /**
+     * Возвращает группы валидации.
+     *
+     * @return группы валидации
+     */
     Class<?>[] groups() default {};
 
+    /**
+     * Возвращает payload.
+     *
+     * @return payload
+     */
     Class<? extends Payload>[] payload() default {};
 }

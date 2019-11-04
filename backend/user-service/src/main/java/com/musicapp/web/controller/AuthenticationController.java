@@ -1,4 +1,4 @@
-package com.musicapp.controller;
+package com.musicapp.web.controller;
 
 import com.musicapp.dto.AuthenticationRequestDto;
 import com.musicapp.dto.AuthenticationResponseDto;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 /**
- * REST API для авторизации
+ * Методы для аутентификации.
  *
  * @author evgeniycheban
  */
@@ -24,8 +24,10 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     /**
-     * @param request DTO запроса авторизации
-     * @return ответ с jwt токеном авторизации
+     * Метод аутентификации.
+     *
+     * @param request запрос аутентификации
+     * @return ответ с jwt токеном
      */
     @PostMapping
     public AuthenticationResponseDto authenticate(@Valid @RequestBody AuthenticationRequestDto request) {

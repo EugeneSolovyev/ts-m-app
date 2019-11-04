@@ -7,7 +7,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * Проверка на совпадение пароля
+ * Валидатор для проверки совпадения пароля.
  *
  * @author evgeniycheban
  */

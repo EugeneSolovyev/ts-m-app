@@ -7,14 +7,14 @@ import com.musicapp.projection.UserProfileProjection;
 import java.util.function.Consumer;
 
 /**
- * Сервис для управления пользователями
+ * Интерфейс сервиса для управления пользователями.
  *
  * @author evgeniycheban
  */
 public interface UserService {
 
     /**
-     * Создание нового пользователя
+     * Создаёт нового пользователя.
      *
      * @param userDto      новый пользователь
      * @param userConsumer callback с пользователем
@@ -22,7 +22,7 @@ public interface UserService {
     void create(UserDto userDto, Consumer<User> userConsumer);
 
     /**
-     * Проверка существования пользователя по номеру телефона
+     * Проверяет существование пользователя по номеру телефона.
      *
      * @param phone номер телефона пользователя
      * @return true если пользователь существует
@@ -30,7 +30,7 @@ public interface UserService {
     boolean checkPhone(String phone);
 
     /**
-     * Получение профиля пользователя по идентификатору
+     * Возвращает профиль пользователя по идентификатору.
      *
      * @param id идентификатор пользователя
      * @return найденный пользователь или null

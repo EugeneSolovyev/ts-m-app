@@ -17,7 +17,7 @@ public abstract class AbstractPhoneVerificationService implements PhoneVerificat
         boolean valid = isValid(phone, code);
         if (valid) {
             Claims claims = Jwts.claims();
-            claims.put(ClaimConstants.VERIFIED_PHONE, phone);
+            claims.put(ClaimConstants.verifiedPhone, phone);
 
             String token = tokenService.generate(claims);
             TokenContextHolder.setToken(token);
@@ -34,7 +34,7 @@ public abstract class AbstractPhoneVerificationService implements PhoneVerificat
         }
 
         Claims claims = tokenService.getClaims(token);
-        String verifiedPhone = claims.get(ClaimConstants.VERIFIED_PHONE, String.class);
+        String verifiedPhone = claims.get(ClaimConstants.verifiedPhone, String.class);
 
         return phone.equals(verifiedPhone);
     }

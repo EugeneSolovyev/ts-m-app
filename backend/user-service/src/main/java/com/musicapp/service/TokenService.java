@@ -6,14 +6,14 @@ import io.jsonwebtoken.Claims;
 import java.util.Optional;
 
 /**
- * Сервис для работы с jwt токеном
+ * Интерфейс сервиса для работы с jwt токеном.
  *
  * @author evgeniycheban
  */
 public interface TokenService {
 
     /**
-     * Получение авторизованного пользователя из jwt токена
+     * Возвращает авторизованного пользователя из jwt токена.
      *
      * @param token jwt токен
      * @return сущность пользователя
@@ -21,7 +21,7 @@ public interface TokenService {
     Optional<AuthorizedUser> getAuthorizedUser(String token);
 
     /**
-     * Генерация jwt токена из авторизованного пользователя
+     * Генерирует jwt токен из авторизованного пользователя.
      *
      * @param authorizedUser авторизованный пользователь
      * @return jwt токен
@@ -29,7 +29,7 @@ public interface TokenService {
     String generate(AuthorizedUser authorizedUser);
 
     /**
-     * Генерация кастомного jwt токена из параметров
+     * Генерирует jwt токен из параметров.
      *
      * @param claims параметры
      * @return jwt токен
@@ -37,7 +37,7 @@ public interface TokenService {
     String generate(Claims claims);
 
     /**
-     * Получение параметров из jwt токена
+     * Возвращает параметры из jwt токена.
      */
     Claims getClaims(String token);
 

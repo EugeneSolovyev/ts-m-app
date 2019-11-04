@@ -11,7 +11,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Проверка формата номера телефона пользователя
+ * Аннотация для проверки формата номера телефона.
  *
  * @author evgeniycheban
  */
@@ -20,9 +20,26 @@ import java.lang.annotation.Target;
 @Documented
 @Constraint(validatedBy = PhoneFormatValidator.class)
 public @interface PhoneFormat {
+
+    /**
+     * Возвращает валидационное сообщение.
+     *
+     * @return валидационное сообщение
+     */
     String message() default "{user.phone.format}";
 
+    /**
+     * Возвращает группы валидации.
+     *
+     * @return группы валидации
+     */
     Class<?>[] groups() default {};
 
+    /**
+     * Возвращает payload.
+     *
+     * @return payload
+     */
     Class<? extends Payload>[] payload() default {};
+
 }

@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * Проверка на верифицированность номера телефона пользователя
+ * Валидатор для проверки верифицированности номера телефона.
  *
  * @author evgeniycheban
  */

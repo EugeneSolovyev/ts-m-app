@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Конфигурация сервиса для работы с jwt
+ * Конфигурация сервиса для работы с jwt.
  *
  * @author evgeniycheban
  */
@@ -20,9 +20,6 @@ public class TokenServiceConfig {
 
     private final TokenServiceProperties properties;
 
-    /**
-     * @return сервис для работы с jwt
-     */
     @Bean
     public TokenService tokenService() {
         return new TokenServiceImpl(properties.getSecret(), properties.getExpiration());

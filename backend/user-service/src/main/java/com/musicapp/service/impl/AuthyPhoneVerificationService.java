@@ -14,17 +14,17 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 /**
- * Реализация сервиса верификации номера телефона пользователя
+ * Реализация сервиса для верификации номера телефона через Authy.
  *
  * @author evgeniycheban
  */
 @Service
-@Profile(ProfileConstants.PROD)
-public class PhoneVerificationServiceImpl extends AbstractPhoneVerificationService {
+@Profile(ProfileConstants.prod)
+public class AuthyPhoneVerificationService extends AbstractPhoneVerificationService {
 
     private final AuthyApiClient authyApiClient;
 
-    public PhoneVerificationServiceImpl(TokenService tokenService, AuthyApiClient authyApiClient) {
+    public AuthyPhoneVerificationService(TokenService tokenService, AuthyApiClient authyApiClient) {
         super(tokenService);
         this.authyApiClient = authyApiClient;
     }

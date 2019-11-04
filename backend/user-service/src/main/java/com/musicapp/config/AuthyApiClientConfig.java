@@ -10,24 +10,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 /**
- * Конфигурация authy клиента
+ * Конфигурация Authy клиента.
  *
  * @author evgeniycheban
  */
 @Configuration
 @EnableConfigurationProperties(AuthyApiClientProperties.class)
-@Profile(ProfileConstants.PROD)
+@Profile(ProfileConstants.prod)
 @RequiredArgsConstructor
 public class AuthyApiClientConfig {
 
-    /**
-     * @param properties параметры конфигурации authy
-     */
     private final AuthyApiClientProperties properties;
 
-    /**
-     * @return authy клиент
-     */
     @Bean
     public AuthyApiClient authyApiClient() {
         return new AuthyApiClient(properties.getApiKey());

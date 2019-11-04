@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * Валидатор для проверки существования сущности
+ * Валидатор для проверки существования сущности.
  *
  * @author evgeniycheban
  */
@@ -17,9 +17,6 @@ public class ExistenceValidator implements ConstraintValidator<Existence, Object
 
     private final Repositories repositories;
 
-    /**
-     * @param listableBeanFactory фабрика бинов
-     */
     public ExistenceValidator(ListableBeanFactory listableBeanFactory) {
         this.repositories = new Repositories(listableBeanFactory);
     }
@@ -45,7 +42,8 @@ public class ExistenceValidator implements ConstraintValidator<Existence, Object
         JpaSpecificationExecutor<?> executor = repositories.getRepositoryFor(entity)
                 .filter(repository -> repository instanceof JpaSpecificationExecutor)
                 .map(repository -> (JpaSpecificationExecutor<?>) repository)
-                .orElseThrow(() -> new IllegalArgumentException("No repository found for type: " + entity.getSimpleName()));
+                .orElseThrow(() -> new IllegalArgumentException("No repository found for type: "
+                                                                + entity.getSimpleName()));
         long count = executor.count((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(field), value));
 
         return (count == 1) == exists;

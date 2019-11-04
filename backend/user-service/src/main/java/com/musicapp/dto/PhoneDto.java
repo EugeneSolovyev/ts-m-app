@@ -10,12 +10,18 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * dto-представление номера телефона.
+ *
+ * @author evgeniycheban
+ */
 @Data
 public class PhoneDto {
 
     @NotBlank(message = "{user.phone.empty}", groups = PhoneNotBlankGroup.class)
     @PhoneFormat(groups = PhoneFormatGroup.class)
-    @Existence(message = "{user.phone.duplicate}", entity = User.class, field = "phone", groups = PhoneUniqueGroup.class)
+    @Existence(message = "{user.phone.duplicate}", entity = User.class, field = "phone",
+            groups = PhoneUniqueGroup.class)
     private String phone;
 
 }

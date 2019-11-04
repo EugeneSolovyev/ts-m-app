@@ -3,31 +3,31 @@ package com.musicapp.security.context;
 import lombok.experimental.UtilityClass;
 
 /**
- * Thread local хранилище для jwt токена
+ * Thread local хранилище для jwt токена.
  *
  * @author evgeniycheban
  */
 @UtilityClass
 public class TokenContextHolder {
 
-    private final ThreadLocal<String> TOKEN_THREAD_LOCAL = new ThreadLocal<>();
+    private final ThreadLocal<String> tokenStorage = new ThreadLocal<>();
 
     /**
-     * Возвращает jwt токен из thread local переменной
+     * Возвращает jwt токен из хранилища.
      *
      * @return jwt токен
      */
     public String getToken() {
-        return TOKEN_THREAD_LOCAL.get();
+        return tokenStorage.get();
     }
 
     /**
-     * Установка jwt токена в thread local переменную
+     * Сохраняет jwt токен в хранилище.
      *
      * @param token jwt токен
      */
     public void setToken(String token) {
-        TOKEN_THREAD_LOCAL.set(token);
+        tokenStorage.set(token);
     }
 
 }

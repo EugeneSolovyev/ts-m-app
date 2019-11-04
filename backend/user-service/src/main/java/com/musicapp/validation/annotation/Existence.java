@@ -11,7 +11,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Аннотация валидирующая существования сущности
+ * Аннотация для проверки существования сущности.
  *
  * @author evgeniycheban
  */
@@ -22,32 +22,44 @@ import java.lang.annotation.Target;
 public @interface Existence {
 
     /**
+     * Возвращает класс сущности.
+     *
      * @return класс сущности
      */
     Class<?> entity();
 
     /**
+     * Возвращает поле сущности.
+     *
      * @return поле сущности
      */
     String field();
 
     /**
+     * Возвращает признак, что сущность должна существовать, по умолчанию false.
+     *
      * @return true если сущность должна существовать, по умолчанию false
      */
     boolean exists() default false;
 
     /**
+     * Возвращает валидационное сообщение.
+     *
      * @return валидационное сообщение
      */
     String message();
 
     /**
+     * Возвращает группы валидации.
+     *
      * @return группы валидации
      */
     Class<?>[] groups() default {};
 
     /**
-     * @return payload - не используется
+     * Возвращает payload.
+     *
+     * @return payload
      */
     Class<? extends Payload>[] payload() default {};
 

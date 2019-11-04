@@ -16,7 +16,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 /**
- * DTO для сущности пользователя
+ * dto-представление сущности пользователя.
  *
  * @author evgeniycheban
  */

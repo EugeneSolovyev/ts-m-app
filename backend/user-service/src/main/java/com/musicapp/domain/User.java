@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Сущность пользователя
+ * Сущность пользователя.
  *
  * @author evgeniycheban
  */
