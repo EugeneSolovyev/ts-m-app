@@ -9,6 +9,11 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * dto-представление номера телефона и кода подтверждения.
+ *
+ * @author evgeniycheban
+ */
 @PhoneAndCode(groups = PhoneAndCodeGroup.class)
 @Data
 public class PhoneCodeDto {

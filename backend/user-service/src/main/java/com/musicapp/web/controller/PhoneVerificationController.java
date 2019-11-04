@@ -34,7 +34,7 @@ public class PhoneVerificationController {
     /**
      * Метод для отправки кода подтверждения на номер телефона.
      *
-     * @param phoneDto DTO номера телефона пользователя
+     * @param phoneDto dto номера телефона пользователя
      * @param type     тип отправки кода подтверждения номера телефона пользователя
      */
     @PostMapping(value = "/{type}/send-code", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -46,7 +46,7 @@ public class PhoneVerificationController {
     /**
      * Метод для проверки номера телефона и кода подтверждения.
      *
-     * @param phoneCodeDto dto номера телефона с кодом подтверждения
+     * @param phoneCodeDto dto номера телефона и кода подтверждения
      * @return ответ с jwt токеном
      */
     @PostMapping(value = "/check-phone-code")

@@ -42,7 +42,7 @@ public class UserController {
     /**
      * Метод валидирует и создаёт нового пользователя с отправкой в message broker.
      *
-     * @param userDto DTO сущности пользователя
+     * @param userDto dto сущности пользователя
      */
     @PostMapping
     public void create(@Validated({
@@ -61,7 +61,7 @@ public class UserController {
     /**
      * Метод валидирует и проверяет существование пользователя по номеру телефона.
      *
-     * @param phoneDto DTO номера телефона пользователя
+     * @param phoneDto dto номера телефона пользователя
      * @return ответ с признаком существования пользователя
      */
     @PostMapping("/check-phone")

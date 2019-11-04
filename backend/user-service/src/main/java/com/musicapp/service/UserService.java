@@ -2,6 +2,7 @@ package com.musicapp.service;
 
 import com.musicapp.domain.User;
 import com.musicapp.dto.UserDto;
+import com.musicapp.exception.NotFoundException;
 import com.musicapp.projection.UserProfileProjection;
 
 import java.util.function.Consumer;
@@ -33,7 +34,8 @@ public interface UserService {
      * Возвращает профиль пользователя по идентификатору.
      *
      * @param id идентификатор пользователя
-     * @return найденный пользователь или null
+     * @return профиль пользователя
+     * @throws NotFoundException в случае если пользователь не найден
      */
     UserProfileProjection getProfile(Long id);
 

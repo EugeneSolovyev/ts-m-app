@@ -4,6 +4,11 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * dto-представление запроса аутентификации.
+ *
+ * @author evgeniycheban
+ */
 @Data
 public class AuthenticationRequestDto {
 

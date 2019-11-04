@@ -1,7 +1,7 @@
 package com.musicapp.domain;
 
 /**
- * Тип доменного события.
+ * Перечисление типов доменных событий.
  *
  * @author evgeniycheban
  */

@@ -38,6 +38,9 @@ public interface TokenService {
 
     /**
      * Возвращает параметры из jwt токена.
+     *
+     * @param token jwt токен
+     * @return параметры
      */
     Claims getClaims(String token);
 

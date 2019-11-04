@@ -23,18 +23,18 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     Optional<AuthorizedUserProjection> findByPhone(String phone);
 
     /**
-     * Возвращает пользователя по идентификатору.
+     * Возвращает Optional пользователя по идентификатору.
      *
      * @param id   идентификатор пользователя
      * @param type тип проекции
-     * @return проекция пользователя
+     * @return Optional пользователя
      */
-    <T> T findById(Long id, Class<T> type);
+    <T> Optional<T> findById(Long id, Class<T> type);
 
     /**
      * Проверяет существование пользователя по номеру телефона.
      *
-     * @param phone номер телефона
+     * @param phone номер телефона пользователя
      * @return true если пользователь существует
      */
     boolean existsByPhone(String phone);

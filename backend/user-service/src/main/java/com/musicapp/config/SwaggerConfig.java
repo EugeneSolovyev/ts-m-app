@@ -1,5 +1,6 @@
 package com.musicapp.config;
 
+import com.musicapp.config.properties.SwaggerConfigProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

@@ -1,5 +1,6 @@
 package com.musicapp.web.handler;
 
+import com.musicapp.exception.NotFoundException;
 import com.musicapp.util.ExceptionUtils;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.internal.engine.path.NodeImpl;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +94,19 @@ public class ExceptionInfoHandler {
         return CONSTRAINT_CODE_MAP.entrySet().stream()
                 .filter(entry -> rootMessage.contains(entry.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, entry -> getMessage(entry.getValue())));
+    }
+
+    /**
+     * Обрабатывает ошибки при отсутствии сущности в бд.
+     *
+     * @param e ошибка при отсутствии сущности в бд.
+     * @return ошибки при отсутствии сущности в бд, в формате название поля - сообщение об ошибке
+     */
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseBody
+    public Map<String, String> handleNotFound(NotFoundException e) {
+        return Collections.singletonMap(e.getField(), getMessage(e.getMessage()));
     }
 
     private String getMessage(String code) {

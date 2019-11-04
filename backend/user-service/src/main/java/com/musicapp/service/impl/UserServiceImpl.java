@@ -3,6 +3,7 @@ package com.musicapp.service.impl;
 import com.musicapp.domain.Role;
 import com.musicapp.domain.User;
 import com.musicapp.dto.UserDto;
+import com.musicapp.exception.NotFoundException;
 import com.musicapp.mapper.UserMapper;
 import com.musicapp.projection.UserProfileProjection;
 import com.musicapp.repository.UserRepository;
@@ -45,7 +46,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserProfileProjection getProfile(Long id) {
-        return repository.findById(id, UserProfileProjection.class);
+        return repository.findById(id, UserProfileProjection.class)
+                .orElseThrow(() -> new NotFoundException("user.id.notFound", "id"));
     }
 
 }

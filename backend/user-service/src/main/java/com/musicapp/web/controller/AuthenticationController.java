@@ -1,7 +1,7 @@
 package com.musicapp.web.controller;
 
 import com.musicapp.dto.AuthenticationRequestDto;
-import com.musicapp.dto.AuthenticationResponseDto;
+import com.musicapp.dto.TokenDto;
 import com.musicapp.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,14 +26,14 @@ public class AuthenticationController {
     /**
      * Метод аутентификации.
      *
-     * @param request запрос аутентификации
+     * @param request dto запрос аутентификации
      * @return ответ с jwt токеном
      */
     @PostMapping
-    public AuthenticationResponseDto authenticate(@Valid @RequestBody AuthenticationRequestDto request) {
+    public TokenDto authenticate(@Valid @RequestBody AuthenticationRequestDto request) {
         String token = service.authenticate(request.getUsername(), request.getPassword());
 
-        return new AuthenticationResponseDto(token);
+        return new TokenDto(token);
     }
 
 }
