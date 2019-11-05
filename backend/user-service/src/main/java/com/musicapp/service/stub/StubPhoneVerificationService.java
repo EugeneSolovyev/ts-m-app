@@ -9,7 +9,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 /**
- * Заглушка для сервиса верификации номера телефона.
+ * Заглушка сервиса верификации номера телефона.
+ *
+ * @author evgeniycheban
  */
 @Service
 @Profile(ProfileConstants.local)

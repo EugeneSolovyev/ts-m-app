@@ -11,7 +11,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Аннотация для проверки на верифицированность номера телефона.
+ * Аннотация для проверки верифицированности номера телефона.
  *
  * @author evgeniycheban
  */

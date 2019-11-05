@@ -7,6 +7,11 @@ import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * Абстрактная реализация сервиса для верификации номера телефона.
+ *
+ * @author evgeniycheban
+ */
 @RequiredArgsConstructor
 public abstract class AbstractPhoneVerificationService implements PhoneVerificationService {
 

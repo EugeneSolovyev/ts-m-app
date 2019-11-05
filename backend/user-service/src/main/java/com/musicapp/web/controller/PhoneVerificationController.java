@@ -35,7 +35,7 @@ public class PhoneVerificationController {
      * Метод для отправки кода подтверждения на номер телефона.
      *
      * @param phoneDto dto номера телефона пользователя
-     * @param type     тип отправки кода подтверждения номера телефона пользователя
+     * @param type     тип отправки кода подтверждения
      */
     @PostMapping(value = "/{type}/send-code", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void sendCode(@Validated(PhoneSequence.class) @RequestBody PhoneDto phoneDto,

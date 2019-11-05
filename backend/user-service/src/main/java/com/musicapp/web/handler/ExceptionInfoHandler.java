@@ -80,10 +80,10 @@ public class ExceptionInfoHandler {
     }
 
     /**
-     * Обрабатывает ошибки конфликтов.
+     * Обрабатывает ошибку конфликта.
      *
      * @param e ошибка конфликта
-     * @return ошибки конликтов в формате название поля - сообщение об ошибке
+     * @return ошибка конликта в формате название поля - сообщение об ошибке
      */
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -97,10 +97,10 @@ public class ExceptionInfoHandler {
     }
 
     /**
-     * Обрабатывает ошибки при отсутствии сущности в бд.
+     * Обрабатывает ошибку при отсутствии сущности в бд.
      *
      * @param e ошибка при отсутствии сущности в бд.
-     * @return ошибки при отсутствии сущности в бд, в формате название поля - сообщение об ошибке
+     * @return ошибка при отсутствии сущности в бд, в формате название поля - сообщение об ошибке
      */
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)

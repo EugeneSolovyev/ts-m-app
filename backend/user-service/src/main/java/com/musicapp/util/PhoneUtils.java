@@ -19,6 +19,7 @@ public class PhoneUtils {
      *
      * @param phone номер телефона
      * @return объект PhoneNumber
+     * @throws PhoneParseException в случае ошибки парсинга номера телефона
      */
     public Phonenumber.PhoneNumber parse(String phone) {
         return parse(phone, null);
@@ -30,6 +31,7 @@ public class PhoneUtils {
      * @param phone         номер телефона
      * @param defaultRegion регион по умолчанию
      * @return объект PhoneNumber
+     * @throws PhoneParseException в случае ошибки парсинга номера телефона
      */
     public Phonenumber.PhoneNumber parse(String phone, String defaultRegion) {
         try {
@@ -44,6 +46,7 @@ public class PhoneUtils {
      *
      * @param phone номер телефона
      * @return true если номер телефона валиден
+     * @throws PhoneParseException в случае ошибки парсинга номера телефона
      */
     public boolean isValid(String phone) {
         Phonenumber.PhoneNumber phoneNumber = parse(phone);
