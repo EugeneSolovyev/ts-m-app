@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# user-service
+export USER_SERVICE_SERVER_PORT=6000
+export USER_SERVICE_SERVLET_CONTEXT_PATH=/user-service
+export USER_DB_URL=jdbc:postgresql://user-db:5432/postgres
+export USER_DB_USERNAME=postgres
+export USER_DB_PASSWORD=password
+export USER_SERVICE_KAFKA_BINDER="kafka"
+export USER_SERVICE_KAFKA_DESTINATION="user"
+export USER_SERVICE_KAFKA_CONTENTTYPE="application/json"
+export USER_SERVICE_KAFKA_GROUP="user-group"
+export USER_SERVICE_KAFKA_PRODUCER_REQUIREDGROUPS="user-group"
+export USER_SERVICE_KAFKA_BROKERS=kafka
+export USER_SERVICE_KAFKA_DEFAULT_BROKER_PORT=29092
+export USER_SERVICE_KAFKA_DEFAULT_ZK_PORT=32181
+
+# globals
+export TOKEN_EXPIRATION=604800
+export TOKEN_SECRET=IUJSJWMveG5bdjNBdjk7cg==
+export SPRING_PROFILES_ACTIVE=local
+export SPRING_JPA_SHOW_SQL=true
+export SPRING_JPA_PROPERTIES_HIBERNATE_TEMP_USE_JDBC_METADATA_DEFAULTS=false
+export SWAGGER_HOST=localhost:8080
+
+docker-compose up --build

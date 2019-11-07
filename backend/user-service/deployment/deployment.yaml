@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  labels:
+    app: user-service
+spec:
+  replicas: 3
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      name: user-service
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: 85.143.175.141/user-service:version
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /user-service/actuator/health
+              port: 8080
+          envFrom:
+            - configMapRef:
+                name: user-service-config
+            - secretRef:
+                name: token-secret
+            - secretRef:
+                name: user-db-secret
+          imagePullPolicy: Always
+      restartPolicy: Always
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
