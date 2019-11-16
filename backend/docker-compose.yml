@@ -1,5 +1,8 @@
 version: '3'
 
+networks:
+    dockernet:
+      external: true
 services:
   user-service:
     environment:
@@ -68,3 +71,9 @@ services:
     image: confluentinc/cp-zookeeper:latest
     ports:
       - 32181:32181
+  
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    restart: always
