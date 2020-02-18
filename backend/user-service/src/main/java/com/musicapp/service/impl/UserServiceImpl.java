@@ -35,8 +35,7 @@ public class UserServiceImpl implements UserService {
         User user = mapper.map(userDto);
         user.setRole(Role.ROLE_USER);
         user.setPassword(encoder.encode(user.getPassword()));
-        repository.save(user);
-        userConsumer.accept(user);
+        userConsumer.accept(repository.save(user));
     }
 
     @Override

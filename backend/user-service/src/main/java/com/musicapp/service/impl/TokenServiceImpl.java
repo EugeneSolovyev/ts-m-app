@@ -59,7 +59,7 @@ public class TokenServiceImpl implements TokenService {
     public String generate(Claims claims) {
         return Jwts.builder()
                 .setClaims(claims)
-                .setExpiration(new Date((System.currentTimeMillis() + expiration) * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
