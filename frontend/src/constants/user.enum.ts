@@ -1,0 +1,1 @@
+export const User: string = "USER/COMMIT_ACTION"
