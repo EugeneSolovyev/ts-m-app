@@ -72,6 +72,22 @@ services:
     ports:
       - 32181:32181
   
+  mongo:
+    image: aashreys/mongo-auth:latest
+    env_file:
+      - ./music-service/.env
+    ports:
+      - 27017:27017
+  music-service:
+    build: ./music-service
+    depends_on:
+      - mongo
+    ports:
+      - 9001:9001
+    links:
+      - mongo
+    restart: on-failure
+  
   frontend:
     build:
       context: ../frontend

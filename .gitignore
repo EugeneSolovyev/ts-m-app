@@ -48,4 +48,4 @@ backend/db/
 */*/.target
 target/
 
-.env
+*/.env/*
