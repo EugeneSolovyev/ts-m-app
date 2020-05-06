@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { pathOr } from 'ramda'
 import { SignUpProvider } from '../../common/contexts/sign-up.context'
 import PhoneCheck from './steps/phone-check'
-import Registration from './steps/registration'
+import Registration from './steps/registration/registration'
 import Congratulations from './steps/congratulations'
 import Authenticate from './steps/authenticate'
 
