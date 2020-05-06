@@ -23,9 +23,16 @@ const SignUp = () => {
 		setStep((prev: StepType) => ++prev as StepType);
 	}
 
+	const phoneExist = (): void => {
+		setStep(4)
+	};
+
 	return (
 		<SignUpProvider>
-			<StepComponent onContinue={hadnleContinue} />
+			<StepComponent
+				onContinue={hadnleContinue}
+				phoneExist={phoneExist}
+			/>
 		</SignUpProvider>
 	);
 };

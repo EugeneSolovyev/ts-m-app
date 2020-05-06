@@ -11,9 +11,10 @@ interface IFormikValues {
 
 interface IPhoneCheckProps {
     onContinue(): void;
+    phoneExist(): void;
 }
 
-const PhoneCheck = ({ onContinue }: IPhoneCheckProps) => {
+const PhoneCheck = ({ onContinue, phoneExist }: IPhoneCheckProps) => {
     const { phone, setPhone } = useContext(SignUpContext)
     const InitialValues: IFormikValues = {
         phone
@@ -21,13 +22,17 @@ const PhoneCheck = ({ onContinue }: IPhoneCheckProps) => {
 
     const handleSubmit = async (values: IFormikValues) => {
         try {
-            await verifyPhone(values.phone)
-            setPhone(values.phone)
-            onContinue()
+            const res = await verifyPhone(values.phone);
+            if (res) {
+                phoneExist()
+            } else {
+                setPhone(values.phone);
+                onContinue()
+            }
         } catch (error) {
             console.log(error)
         }
-    }
+    };
     
     return (
         <Formik
