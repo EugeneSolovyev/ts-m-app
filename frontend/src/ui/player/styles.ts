@@ -47,11 +47,12 @@ export default styled.div`
         grid-template-rows: 15px 2fr;
         .time {
             font-size: 10px;
-            &:last-of-type {
-                justify-self: flex-end;
-            }
         }
-        .ant-slider {
+        .fullTime{
+            font-size: 10px;
+            justify-self: flex-end;
+        }
+        .MuiSlider-root {
             grid-column-end: span 2;
             margin-right: 0;
             margin-top: 8px;

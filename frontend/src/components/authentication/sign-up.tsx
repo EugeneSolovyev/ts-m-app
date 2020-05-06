@@ -23,9 +23,13 @@ const SignUp = () => {
 		setStep((prev: StepType) => ++prev as StepType);
 	}
 
+	const handleAuthenticate = (): void => {
+		setStep(4);
+	}
+
 	return (
 		<SignUpProvider>
-			<StepComponent onContinue={hadnleContinue} />
+			<StepComponent onContinue={hadnleContinue} onAuthenticate={handleAuthenticate}/>
 		</SignUpProvider>
 	);
 };

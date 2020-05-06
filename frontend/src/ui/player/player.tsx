@@ -38,7 +38,7 @@ const Player = forwardRef(({ onClickNext }: IPlayerProps, audioReference: any) =
         onClickNext()
     }, [onClickNext])
 
-    const handleChangeTime = useCallback((value: any) => {
+    const handleChangeTime = useCallback((event: object, value: any) => {
         const { current } = audioReference;
         current.currentTime = value;
     }, [audioReference])
