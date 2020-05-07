@@ -1,14 +1,14 @@
 import React from 'react'
-import { Slider } from 'antd'
+import { Slider } from '@material-ui/core';
 import { addSeconds, format } from 'date-fns'
-
 interface IPlayerTimeProps {
     currentTime: number;
     duration: number;
-    onHandleChangeTime(value: any): void;
+    onHandleChangeTime(event: React.ChangeEvent<{}>, value: any): void;
 }
 
 const DEFAULT_TIME: string = '00:00'
+
 
 const formattedTime = (seconds: number): string => {
   try {
@@ -22,7 +22,7 @@ const formattedTime = (seconds: number): string => {
 export default ({ currentTime, duration, onHandleChangeTime }: IPlayerTimeProps) => (
     <div className="play-control">
         <span className="time">{formattedTime(currentTime)}</span>
-        <span className="time">{formattedTime(duration)}</span>
-        <Slider value={currentTime} min={0} max={duration} onChange={onHandleChangeTime} tooltipVisible={false} />
+        <span className="fullTime">{formattedTime(duration)}</span>
+        <Slider color="secondary" value={currentTime} min={0} max={duration} onChange={onHandleChangeTime} aria-labelledby="continuous-slider" />
     </div>
 )

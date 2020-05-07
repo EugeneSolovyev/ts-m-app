@@ -2,17 +2,14 @@ import styled from 'styled-components'
 import { Form } from 'formik'
 
 export const WrappedForm = styled(Form)`
-    .ant-input {
+    .MuiTextField-root {
         margin-bottom: 1rem;
         border-radius: 50px;
     }
 
-    .ant-btn-block {
-        border-radius: 50px;
-    }
-
-    .ant-input-suffix {
-        top: calc(50% - 8px);
+    .error{
+        color: #f44336;
+        padding: 0px 14px 20px;
     }
 `
 
