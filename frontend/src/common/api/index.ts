@@ -11,7 +11,7 @@ const onRejected = (error: any) => {
 };
 
 const HTTP = axios.create({
-	baseURL: 'http://localhost:8080',
+	baseURL: 'http://5.101.51.243:8080',
 	headers: {
 		'Content-Type': 'application/json',
 		'Access-Control-Allow-Origin': '*'

@@ -4,7 +4,7 @@ import { addSeconds, format } from 'date-fns'
 interface IPlayerTimeProps {
     currentTime: number;
     duration: number;
-    onHandleChangeTime(event: object, value: any): void;
+    onHandleChangeTime(event: React.ChangeEvent<{}>, value: any): void;
 }
 
 const DEFAULT_TIME: string = '00:00'

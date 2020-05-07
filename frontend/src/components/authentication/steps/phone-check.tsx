@@ -4,40 +4,34 @@ import { verifyPhone } from '../../../actions/user';
 import { SignUpContext } from '../../../common/contexts/sign-up.context';
 import { WrappedForm } from '../styles';
 import { Button, TextField } from '@material-ui/core';
-import * as Yup from 'yup';
+import SignupSchema from '../../../validation-schemas/index'
+import step from "../constant";
 
 interface IFormikValues {
     phone: string;
 }
 
 interface IPhoneCheckProps {
-    onContinue(): void;
-    onAuthenticate(): void;
+    onContinue(step?: number): void;
 }
 
-const PhoneCheck = ({ onContinue, onAuthenticate }: IPhoneCheckProps) => {
+const PhoneCheck = ({ onContinue }: IPhoneCheckProps) => {
     const { phone, setPhone } = useContext(SignUpContext)
     const InitialValues: IFormikValues = {
         phone
     }
 
-    const phoneRegExp: any = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/
-    const SignupSchema = Yup.object().shape({
-        phone: Yup.string()
-          .matches(phoneRegExp, 'Phone number is not valid')
-          .required('Required'),
-    });
-
     const handleSubmit = async (values: IFormikValues) => {
         try {
-            console.log(values.phone)
-            await verifyPhone(values.phone)
+            const response = await verifyPhone(values.phone)
             setPhone(values.phone)
-            onAuthenticate()
-            // onContinue()
-        } catch (error) {
-            console.log(error)
-        }
+            if (response) {
+                onContinue(step.AUTHENTICATE_STEP)
+            } else {
+                setPhone(values.phone);
+                onContinue()
+            }
+        } catch (error) {}
     }
     
     return (

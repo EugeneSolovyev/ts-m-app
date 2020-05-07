@@ -6,7 +6,7 @@ import { IUserReducerState } from '../reducers/reducers.d';
 import HTTP from '../common/api';
 
 const STUB_CODE: string = '9999';
-const VERIFY_PHONE_ENDPOINT: string = 'http://5.101.51.243:8080/user-service/verification/phone/check-phone-code';
+const VERIFY_PHONE_ENDPOINT: string = '/user-service/verification/phone/check-phone-code';
 const SIGN_UP_ENDPOINT: string = '/user-service/users';
 const LOGIN_ENDPOINT: string = '/user-service/auth';
 const JWT_TOKEN_KEY: string = 'JWT_TOKEN_KEY';
@@ -22,17 +22,13 @@ interface IUser {
 }
 
 export const verifyPhone = async (phone: string): Promise<Error | boolean> => {
-	try {
-		const { token } = await HTTP.post(VERIFY_PHONE_ENDPOINT, { phone, code: STUB_CODE });
-		console.log(token)
-		if (token) {
-			localStorage.setItem(JWT_TOKEN_KEY, `Bearer ${token}`);
-			return true;
-		} else {
-			return false;
-		}
-	} catch (error) {
-		console.log(error)
+	const { token } = await HTTP.post(VERIFY_PHONE_ENDPOINT, { phone, code: STUB_CODE });
+
+	if (token) {
+		localStorage.setItem(JWT_TOKEN_KEY, `Bearer ${token}`);
+		return true;
+	} else {
+		throw Error();
 	}
 };
 
