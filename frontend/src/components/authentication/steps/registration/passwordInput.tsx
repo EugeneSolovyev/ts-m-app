@@ -4,11 +4,32 @@ import {
 	OutlinedInput,
 	FormControl,
 	IconButton,
+	InputLabel,
 } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { connect } from 'formik';
 
-const PasswordInput = (props: any) => {
+interface passwordInputProps {
+	id: string;
+	label: any;
+	width: any;
+	errors: any;
+	value: any;
+	name: string;
+	placeholder: string;
+	handleChange: any;
+}
+
+const PasswordInput = ({
+	id,
+	label,
+	width,
+	errors,
+	value,
+	name,
+	placeholder,
+	handleChange,
+}: passwordInputProps) => {
 	const [visibility, setVisibility] = React.useState(false);
 
 	const visibilityToggle = () => {
@@ -17,12 +38,16 @@ const PasswordInput = (props: any) => {
 
 	return (
 		<FormControl variant='outlined' size='medium'>
+			<InputLabel htmlFor={id}>{label}</InputLabel>
 			<OutlinedInput
-				value={props.value}
+				id={id}
+				labelWidth={width}
+				error={errors}
+				value={value}
 				type={visibility ? 'text' : 'password'}
-				onChange={props.formik.handleChange}
-				name={props.name}
-				placeholder={props.placeholder}
+				onChange={handleChange}
+				name={name}
+				placeholder={placeholder}
 				endAdornment={
 					<InputAdornment position='end'>
 						<IconButton onClick={visibilityToggle}>
