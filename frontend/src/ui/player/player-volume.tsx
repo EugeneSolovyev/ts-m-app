@@ -20,8 +20,9 @@ interface IAdditionalControlProps {
 const useStyles = makeStyles({
     root: {
         height: 150,
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingTop: 20,
+        paddingBottom: 20,
+        color: '#52af77'
     },
 });
 
@@ -39,10 +40,10 @@ const AdditionalControl = ({volume, onChange, loop = false, onToggleLoop}: IAddi
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-
     const handleChangeVolume = (event: any, newValue: any) => {
         onChange(newValue)
     };
+
     return (
         <AdditionalControlView loop={loop}>
             <Popover
@@ -62,6 +63,7 @@ const AdditionalControl = ({volume, onChange, loop = false, onToggleLoop}: IAddi
                 <div className={classes.root}>
                     <Slider
                         value={volume}
+                        color='secondary'
                         onChange={handleChangeVolume}
                         orientation="vertical"
                         aria-labelledby="vertical-slider"
