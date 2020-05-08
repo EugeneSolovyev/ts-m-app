@@ -1,6 +1,7 @@
 import React from 'react';
 import { Popover, Icon, Button } from 'antd';
 import { VolumeSlider, AdditionalControlView } from './styles';
+import {FavoriteButton} from "./player-favorite";
 
 interface IAdditionalControlProps {
 	volume: number;
@@ -16,8 +17,9 @@ const AdditionalControl = ({ volume, onChange, loop = false, onToggleLoop }: IAd
 				<Icon type="sound" />
 			</Popover>
 			<Button onClick={onToggleLoop} type="link">
-                <Icon type="retweet" />
-            </Button>
+				<Icon type="retweet" />
+			</Button>
+			<FavoriteButton />
 		</AdditionalControlView>
 	);
 };
