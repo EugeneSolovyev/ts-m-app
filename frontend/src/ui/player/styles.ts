@@ -10,8 +10,8 @@ export const AdditionalControlView: any = styled.div`
 		color: inherit;
 	}
 
-	.anticon-retweet {
-		color: ${({ loop }: any) => (loop ? '#95a5a6' : 'inherit')};
+	.MuiSvgIcon-root {
+		padding-bottom: 3px;
 	}
 
 	.anticon-sound {
@@ -41,20 +41,25 @@ export default styled.div`
 		}
 	}
 
-	.play-control {
-		display: grid;
-		grid-template-columns: 1fr 2fr 3fr;
-		grid-template-rows: 25px 2fr;
-		.time {
-			font-size: 10px;
-			&:last-of-type {
+	.playerWrapper {
+		padding-top: 12px;
+
+		.play-control {
+			display: grid;
+			grid-template-columns: 1fr 2fr 3fr;
+			grid-template-rows: 10px 1fr;
+			.time {
+				font-size: 10px;
+			}
+			.fullTime {
+				font-size: 10px;
 				justify-self: flex-end;
 			}
-		}
-		.ant-slider {
-			grid-column-end: span 3;
-			margin-right: 0;
-			margin-top: 8px;
+			.MuiSlider-root {
+				grid-column-end: span 3;
+				margin-right: 0;
+				margin-top: 8px;
+			}
 		}
 	}
 `;

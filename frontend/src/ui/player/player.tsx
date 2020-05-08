@@ -28,7 +28,7 @@ const Player = forwardRef(({ onClickNext }: IPlayerProps, audioReference: any) =
         }
     }
 
-    const handleTogglePlay = useCallback(() => {
+    const handleTogglePlay = useCallback(() => { 
         setPlaying(!isPlaying);
         const { current } = audioReference
         isPlaying ? current.pause() : current.play()
@@ -38,7 +38,7 @@ const Player = forwardRef(({ onClickNext }: IPlayerProps, audioReference: any) =
         onClickNext()
     }, [onClickNext])
 
-    const handleChangeTime = useCallback((value: any) => {
+    const handleChangeTime = useCallback((event: React.ChangeEvent<{}>, value: any) => {
         const { current } = audioReference;
         current.currentTime = value;
     }, [audioReference])

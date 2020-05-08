@@ -1,6 +1,6 @@
 import React from 'react';
 import { Popover, Icon } from 'antd';
-import LoopIcon from '@material-ui/icons/Loop';
+import { Loop } from '@material-ui/icons';
 import { VolumeSlider, AdditionalControlView } from './styles';
 
 interface IAdditionalControlProps {
@@ -22,9 +22,9 @@ const AdditionalControl = ({
 				content={<VolumeSlider vertical value={volume} onChange={onChange} />}>
 				<Icon type='sound' />
 			</Popover>
-			<LoopIcon onClick={onToggleLoop} type='link' fontSize='inherit'>
+			<Loop onClick={onToggleLoop} type='link' fontSize='small'>
 				<Icon type='retweet' />
-			</LoopIcon>
+			</Loop>
 		</AdditionalControlView>
 	);
 };
