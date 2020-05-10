@@ -6,6 +6,7 @@ import { createUser } from '../../../../actions/user';
 import { RegistrWrapper } from './styles';
 import validation from './validationSchema';
 import PasswordInput from './passwordInput';
+import step from '../../constant'
 
 interface IFormikValues {
 	username: string;
@@ -17,7 +18,7 @@ interface IFormikValues {
 }
 
 interface IPhoneCheckProps {
-	onContinue(): void;
+	onContinue(step: number): void;
 }
 
 const Registration = ({ onContinue }: IPhoneCheckProps) => {
@@ -46,7 +47,7 @@ const Registration = ({ onContinue }: IPhoneCheckProps) => {
 	const handleSubmit = async (values: IFormikValues) => {
 		await createUser({ ...values, phone });
 		handleUpdateValues(values);
-		onContinue();
+		onContinue(step.CONGRATULATIONS_STEP);
 	};
 
 	return (
