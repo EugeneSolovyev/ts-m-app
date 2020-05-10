@@ -1,23 +1,30 @@
 import React from 'react';
-import { Popover, Icon, Button } from 'antd';
+import { Popover, Icon } from 'antd';
+import { Loop } from '@material-ui/icons';
 import { VolumeSlider, AdditionalControlView } from './styles';
 
 interface IAdditionalControlProps {
 	volume: number;
-    loop?: boolean;
+	loop?: boolean;
 	onChange(value: any): void;
-    onToggleLoop(): void;
+	onToggleLoop(): void;
 }
 
-const AdditionalControl = ({ volume, onChange, loop = false, onToggleLoop }: IAdditionalControlProps) => {
+const AdditionalControl = ({
+	volume,
+	onChange,
+	loop = false,
+	onToggleLoop,
+}: IAdditionalControlProps) => {
 	return (
 		<AdditionalControlView loop={loop}>
-			<Popover content={<VolumeSlider vertical value={volume} onChange={onChange} />}>
-				<Icon type="sound" />
+			<Popover
+				content={<VolumeSlider vertical value={volume} onChange={onChange} />}>
+				<Icon type='sound' />
 			</Popover>
-			<Button onClick={onToggleLoop} type="link">
-                <Icon type="retweet" />
-            </Button>
+			<Loop onClick={onToggleLoop} type='link' fontSize='small'>
+				<Icon type='retweet' />
+			</Loop>
 		</AdditionalControlView>
 	);
 };

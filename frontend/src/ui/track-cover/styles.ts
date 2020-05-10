@@ -2,29 +2,18 @@ import styled from 'styled-components';
 
 export default styled.div`
 	display: grid;
-    grid-template-rows: 186px 30px 20px;
-    background-color: #34495e;
-    grid-gap: 2px;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
 
 	img {
-		width: 100%;
-		height: 186px;
-		object-fit: cover;
+		width: 1.5rem;
+		height: 1.5rem;
+		margin-right: 2rem;
 	}
 
 	span {
 		padding: 0 1rem;
-        color: ${({ theme: { secondaryColor } }) => secondaryColor};
-		text-overflow: ellipsis;
-		overflow: hidden;
+		color: ${({ theme: { secondaryColor } }) => secondaryColor};
 		white-space: nowrap;
-	}
-
-	.title {
-		font-size: 20px;
-	}
-
-	.author {
-		font-size: 14px;
 	}
 `;

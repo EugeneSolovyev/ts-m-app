@@ -49,3 +49,4 @@ backend/db/
 target/
 
 */.env/*
+*/yarn.lock
