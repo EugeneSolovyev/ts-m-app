@@ -12,7 +12,6 @@ interface IFormikValues {
 }
 
 interface IPhoneCheckProps {
-  onContinue(): void;
   onContinue(step?: number): void;
 }
 
