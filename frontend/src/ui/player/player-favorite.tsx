@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import IconButton from '@material-ui/core/IconButton'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 import {useSelector} from "react-redux";
@@ -6,16 +6,17 @@ import StarIcon from '@material-ui/icons/Star';
 
 
 export const FavoriteButton: React.FC = () => {
-  const [favoriteTracksData, setFavoriteTrack] = useState(JSON.parse(localStorage.getItem('favoriteTracks') || '[]'));
+  const [favoriteTracksData, setFavoriteTrack] = useState(() => {
+    const favoriteTracks = localStorage.getItem('favoriteTracks');
+    return JSON.parse(favoriteTracks || '[]');
+  });
   const currentTrackId: string = useSelector((state: any): string => state.content.current.id);
 
-
-  const isTrackId = (TracksData: string[]) => {
-    return TracksData.some((trackId: string) => trackId === currentTrackId);
-  }
+  const checkTrackId = useCallback((trackData: string[]) =>
+    trackData.some((trackId: string) => trackId === currentTrackId), [currentTrackId]);
 
   const handleToggleToFavorite = (): void => {
-    if (isTrackId(favoriteTracksData)) {
+    if (checkTrackId(favoriteTracksData)) {
       const newFavoriteTracksData: null | Array<string> = favoriteTracksData.filter((trackId: string) => trackId !== currentTrackId);
       setFavoriteTrack(newFavoriteTracksData);
 
@@ -31,7 +32,7 @@ export const FavoriteButton: React.FC = () => {
 
   return (
     <IconButton onClick={handleToggleToFavorite} color="secondary" >
-      {isTrackId(favoriteTracksData) ? <StarIcon /> : <StarBorderIcon />}
+      {checkTrackId(favoriteTracksData) ? <StarIcon /> : <StarBorderIcon />}
     </IconButton>
   )
 }
