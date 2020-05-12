@@ -1,18 +1,19 @@
-import React from 'react'
-import CurrentTrackView from './styles'
+import React from 'react';
+import CurrentTrackView from './styles';
 
 interface IProps {
-    image: string;
-    title: string;
-    author: string;
+	image: string;
+	title: string;
+	author: string;
 }
 
 const TrackCover = ({ image, title, author }: IProps) => (
-    <CurrentTrackView>
-        <img src={image} alt={title} />
-        <span className="title">{title}</span>
-        <span className="author">{author}</span>
-    </CurrentTrackView>
-)
+	<CurrentTrackView>
+		<span className='track'>
+			<img src={image} alt={title} />
+			{title} - {author}
+		</span>
+	</CurrentTrackView>
+);
 
-export default TrackCover
+export default TrackCover;

@@ -71,7 +71,7 @@ services:
     image: confluentinc/cp-zookeeper:latest
     ports:
       - 32181:32181
-  
+
   mongo:
     image: aashreys/mongo-auth:latest
     env_file:
@@ -87,11 +87,11 @@ services:
     links:
       - mongo
     restart: on-failure
-  
-  frontend:
-    build:
-      context: ../frontend
-      dockerfile: Dockerfile
-    restart: always
-    volumes: 
-      - ../frontend:/var/html
+
+  # frontend:
+  #   build:
+  #     context: ../frontend
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   volumes:
+  #     - ../frontend:/var/html
