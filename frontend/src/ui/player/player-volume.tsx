@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import {FavoriteButton} from "./player-favorite";
 import { Loop } from '@material-ui/icons';
+import LoopIcon from '@material-ui/icons/Loop';
 
 interface IAdditionalControlProps {
     volume: number;
@@ -68,7 +69,7 @@ const AdditionalControl = ({volume, onChange, loop = false, onToggleLoop}: IAddi
                 />
             </Tooltip>
             <Loop onClick={onToggleLoop} type='link' fontSize='small'>
-                <Icon type='retweet' />
+               <LoopIcon/>
             </Loop>
             <FavoriteButton />
         </AdditionalControlView>
