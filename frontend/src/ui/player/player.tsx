@@ -16,7 +16,7 @@ const Player = forwardRef(({ onClickNext }: IPlayerProps, audioReference: any) =
     const [isPlaying, setPlaying] = useState<boolean>(true)
     const [duration, setDuration] = useState<number>(0)
     const [time, setTime] = useState<number>(0)
-    const [volume, setVolume] = useState<number>(100)
+    const [volume, setVolume] = useState<number>(50)
     const [loop, setLoop] = useState<boolean>(false)
 
     const timeUpdate = ({ target: { currentTime, duration } }: any) => {

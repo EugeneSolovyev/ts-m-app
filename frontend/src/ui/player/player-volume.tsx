@@ -1,80 +1,72 @@
-import React, {useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {AdditionalControlView} from './styles';
-
 import {Slider} from '@material-ui/core';
-import Popover from '@material-ui/core/Popover';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
-import {makeStyles} from '@material-ui/core/styles';
-
+import VolumeOffIcon from '@material-ui/icons/VolumeOff';
+import {makeStyles, Theme, createStyles} from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 interface IAdditionalControlProps {
     volume: number;
     loop?: boolean;
 
     onChange(value: any): void;
-
     onToggleLoop(): void;
 }
 
-const useStyles = makeStyles({
-    root: {
-        height: 150,
-        paddingTop: 20,
-        paddingBottom: 20,
-        color: '#52af77'
-    },
-});
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        arrow: {
+            color: '#2c3e50'
+        },
+        tooltip: {
+            backgroundColor: '#2c3e50',
+            width: 200,
+            height: 35,
+            paddingLeft: 20,
+            paddingRight: 20,
+            boxShadow: ' 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)'
+        },
+    }),
+);
 
 const AdditionalControl = ({volume, onChange, loop = false, onToggleLoop}: IAdditionalControlProps) => {
 
+    const [sound, setSound] = useState(true);
+    const [soundMemory, setSoundMemory] = useState(volume);
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
 
     const handleChangeVolume = (event: any, newValue: any) => {
-        onChange(newValue)
+        if (!sound) setSound(true);
+        setSoundMemory(newValue);
+        onChange(soundMemory)
     };
+
+    useEffect(() => {
+        if (!sound) {
+            onChange(0)
+        } else {
+            onChange(soundMemory)
+        }
+    });
 
     return (
         <AdditionalControlView loop={loop}>
-            <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
-                }}
-                transformOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                }}
-            >
-                <div className={classes.root}>
-                    <Slider
-                        value={volume}
-                        color='secondary'
-                        onChange={handleChangeVolume}
-                        orientation="vertical"
-                        aria-labelledby="vertical-slider"
-                    />
-                </div>
-            </Popover>
-            <IconButton
-                children={<VolumeUpIcon/>}
-                onClick={handleClick}
-                color='inherit'
-            />
+            <Tooltip title={
+                <Slider
+                    value={volume}
+                    color='secondary'
+                    onChange={handleChangeVolume}
+                />
+            } arrow interactive classes={classes}>
+                <IconButton
+                    children={volume > 0 ? <VolumeUpIcon/> : <VolumeOffIcon/>}
+                    onClick={() => setSound(!sound)}
+                    color='inherit'
+                />
+            </Tooltip>
         </AdditionalControlView>
     );
 };
