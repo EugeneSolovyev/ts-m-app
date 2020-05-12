@@ -5,6 +5,8 @@ export const AdditionalControlView: any = styled.div`
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 30%);
 	align-items: center;
+	justify-content: center;
+  justify-items: center;
 
 	.ant-btn-link {
 		color: inherit;
