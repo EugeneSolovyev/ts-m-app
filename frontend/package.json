@@ -167,6 +167,7 @@
     ]
   },
   "devDependencies": {
-    "@types/jwt-decode": "^2.2.1"
+    "@types/jwt-decode": "^2.2.1",
+    "@types/yup": "^0.28.0"
   }
 }

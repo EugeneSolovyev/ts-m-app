@@ -6,12 +6,12 @@ import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import {makeStyles, Theme, createStyles} from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import {FavoriteButton} from "./player-favorite";
+import { Loop } from '@material-ui/icons';
 
 interface IAdditionalControlProps {
     volume: number;
     loop?: boolean;
-
     onChange(value: any): void;
     onToggleLoop(): void;
 }
@@ -67,6 +67,10 @@ const AdditionalControl = ({volume, onChange, loop = false, onToggleLoop}: IAddi
                     color='inherit'
                 />
             </Tooltip>
+            <Loop onClick={onToggleLoop} type='link' fontSize='small'>
+                <Icon type='retweet' />
+            </Loop>
+            <FavoriteButton />
         </AdditionalControlView>
     );
 };

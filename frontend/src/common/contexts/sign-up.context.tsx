@@ -1,58 +1,55 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState } from 'react';
+import { keys } from 'ramda';
 
 interface ISignUpProviderProps {
-    children: React.ReactNode;
+	children: React.ReactNode;
 }
 
 const INITIAL_VALUES = {
-    phone: '',
-    username: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    repeatPassword: ''
+	phone: '',
+	username: '',
+	firstName: '',
+	lastName: '',
+	email: '',
+	password: '',
+	repeatPassword: '',
+};
+
+export const SignUpContext = createContext<any>(INITIAL_VALUES);
+
+interface formValues {
+	username: string;
+	firstName: string;
+	lastName: string;
+	email: string;
+	password: string;
+	repeatPassword: string;
+	phone: string;
 }
-
-type SignUpType = keyof typeof INITIAL_VALUES
-
-export const SignUpContext = createContext<any>(INITIAL_VALUES)
 
 export const SignUpProvider = ({ children }: ISignUpProviderProps) => {
-    const [phone, setPhone] = useState<string>(INITIAL_VALUES.phone)
-    const [username, setUsername] = useState<string>(INITIAL_VALUES.username)
-    const [firstName, setFirstName] = useState<string>(INITIAL_VALUES.firstName)
-    const [lastName, setLastName] = useState<string>(INITIAL_VALUES.lastName)
-    const [email, setEmail] = useState<string>(INITIAL_VALUES.email)
-    const [password, setPassword] = useState<string>(INITIAL_VALUES.password)
-    const [repeatPassword, setRepeatPassword] = useState<string>(INITIAL_VALUES.repeatPassword)
+	const [values, setValues] = useState<formValues>({
+		username: '',
+		firstName: '',
+		lastName: '',
+		email: '',
+		password: '',
+		repeatPassword: '',
+		phone: '',
+	});
 
-    return (
-        <SignUpContext.Provider
-            value={{
-                phone,
-                setPhone,
+	const handleUpdateValues = (values: formValues) => {
+		keys(values || {}).forEach((key) => {
+			setValues((prevValuesState) => ({
+				...prevValuesState,
+				[key]: values[key],
+			}));
+		});
+	};
 
-                username,
-                setUsername,
-
-                firstName,
-                setFirstName,
-
-                lastName,
-                setLastName,
-
-                email,
-                setEmail,
-
-                password,
-                setPassword,
-
-                repeatPassword,
-                setRepeatPassword,
-            }}
-        >
-            {children}
-        </SignUpContext.Provider>
-    )
-}
+	return (
+		<SignUpContext.Provider value={{ values, setValues, handleUpdateValues }}>
+			{children}
+		</SignUpContext.Provider>
+	);
+};
