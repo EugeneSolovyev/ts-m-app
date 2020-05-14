@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, {useContext} from "react";
 import {Field, Formik, FormikProps} from "formik";
 import { verifyPhone, checkPhone } from "../../../actions/user";
 import { SignUpContext } from "../../../common/contexts/sign-up.context";
@@ -9,6 +9,7 @@ import step from "../constant";
 
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/material.css'
+import {toast} from "react-toastify";
 
 interface IFormikValues {
   phone: string;
@@ -22,6 +23,7 @@ interface IPhoneCheckProps {
 const PhoneCheck = ({ onContinue }: IPhoneCheckProps) => {
   const {
     values: { phone },
+    setValues,
     handleUpdateValues,
   } = useContext(SignUpContext);
   const InitialValues: IFormikValues = {
@@ -32,14 +34,20 @@ const PhoneCheck = ({ onContinue }: IPhoneCheckProps) => {
     const { exists } = await checkPhone(values.phone);
 
     if (!exists) {
-      const serverResponse = await verifyPhone(values.phone);
-
-      if (!(serverResponse instanceof Error)) {
+      try {
+        await verifyPhone(values.phone);
         handleUpdateValues(values);
         onContinue(step.REGISTRATION_STEP);
 
+      } catch (e) {
+        toast.error(e.message);
       }
     } else {
+      setValues((prevState: any) => ({
+        ...prevState,
+        phone: values.phone
+        })
+      );
       onContinue(step.AUTHENTICATE_STEP);
     }
   };
