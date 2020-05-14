@@ -3,7 +3,7 @@ import { Slider } from 'antd';
 
 export const AdditionalControlView: any = styled.div`
 	display: grid;
-	grid-template-columns: repeat(auto-fill, 30%);
+	grid-template-columns: repeat(auto-fill, 25%);
 	align-items: center;
 	justify-content: center;
   justify-items: center;
