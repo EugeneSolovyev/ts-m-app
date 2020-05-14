@@ -10,6 +10,7 @@ const VERIFY_PHONE_ENDPOINT: string =
 const SIGN_UP_ENDPOINT: string = "/user-service/users";
 const LOGIN_ENDPOINT: string = "/user-service/auth";
 const CHECK_PHONE_EXISTS: string = "/user-service/users/check-phone";
+const LOADING_MUSIC_ENDPOINT: string = "/music-service/file";
 const JWT_TOKEN_KEY: string = "JWT_TOKEN_KEY";
 const USER_ID_KEY: string = "USER_ID_KEY";
 
@@ -48,6 +49,21 @@ export const verifyPhone = async (phone: string): Promise<Error | boolean> => {
     return true;
   } else {
     throw new Error('Your number is not valid');
+  }
+};
+
+export const loadMusic = async (tracks: any): Promise<Error | void> => {
+  const formData = new FormData();
+  formData.append('author', tracks.author)
+  formData.append('track', tracks.track);
+  formData.append('title', tracks.title);  
+  formData.append('type', tracks.type);
+  formData.append('cover', tracks.cover);
+  const result: any = await HTTP.post(LOADING_MUSIC_ENDPOINT, formData);
+  if(result.track_id){
+    toast.success("Success")
+  } else if (result.response.data.error.code === 11000) {
+    toast.error("Duplicate music");
   }
 };
 

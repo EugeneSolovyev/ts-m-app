@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Icon, Avatar } from "antd";
+import { Icon, Avatar } from "antd";
 import { bindActionCreators } from "redux";
 import { path } from "ramda";
 import { connect } from "../../helpers/connect";
@@ -8,7 +8,8 @@ import HeaderView from "./styles";
 import { IStore } from "../../store";
 import { IUser } from "../../reducers/reducers.d";
 import LogoIcon from "./assets/live.png";
-import { getCurrentUser } from "../../actions/user";
+import { getCurrentUser } from "../../actions/user"; 
+import { Link } from 'react-router-dom';
 
 const currentUserSelector = (state: IStore): IUser | null =>
   path(["user", "current"], state);
@@ -35,19 +36,22 @@ export default class Header extends React.Component<any> {
   render() {
     const { current, signOut } = this.props;
 
-    return (
-      <HeaderView>
-        <img src={LogoIcon} alt="logo" />
-        {current && (
-          <div className="auth-control">
-            <Avatar icon="user" />
-            <span className="username">{current.username}</span>
-            <Button htmlType="button" type="link" onClick={signOut}>
-              <Icon type="logout" />
-            </Button>
-          </div>
-        )}
-      </HeaderView>
-    );
-  }
+		return (
+			<HeaderView>
+				<img src={LogoIcon} alt="logo"/>
+				{current && (
+					<div className="auth-control">
+						<Avatar icon="user" />
+						<span className="username">
+							{current.username}
+						</span>
+            <Link to="/sendmusic" className="link">Add track</Link>
+						<Link to="/" onClick={signOut}>
+							<Icon type="logout" />
+						</Link>
+					</div>
+				)}
+			</HeaderView>
+		);
+	}
 }
