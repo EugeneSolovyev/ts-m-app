@@ -2,15 +2,16 @@ import React from 'react';
 import CurrentTrackView from './styles';
 
 interface IProps {
-	image: string;
+	cover_id: string;
 	title: string;
 	author: string;
 }
+const baseUrl = `http://5.101.51.243:8080/music-service/file`;
 
-const TrackCover = ({ image, title, author }: IProps) => (
+const TrackCover = ({ cover_id, title, author }: IProps) => (
 	<CurrentTrackView>
 		<span className='track'>
-			<img src={image} alt={title} />
+			<img src={`${baseUrl}/${cover_id}`} alt={title} />
 			{title} - {author}
 		</span>
 	</CurrentTrackView>

@@ -8,22 +8,26 @@ import { setToPlay } from '../../actions/content'
 import ContentCardView from './styles';
 import Card from './card'
 
-const contentSelector = (state: any, type: string) => pathOr([], [ 'content', type ], state);
+const contentSelector = (state: any, type: string) => pathOr([], ['content', type], state);
 const currentUserSelector = (state: any) => pathOr(null, ['user', 'current'], state);
 
 @(connect(
 	(state, ownProps: any) => ({
 		content: contentSelector(state, ownProps.type),
-        user: currentUserSelector(state),
+		user: currentUserSelector(state),
 	}),
-	(dispatch) => bindActionCreators({
-		addToFavorite,
-		removeFromFavorite,
-		setToPlay,
-	}, dispatch)
+	(dispatch) =>
+		bindActionCreators(
+			{
+				addToFavorite,
+				removeFromFavorite,
+				setToPlay,
+			},
+			dispatch
+		)
 ) as any)
 export default class ContentCard extends React.Component<any> {
-    handleAddToFavorite = (id: string | string): void => {
+	handleAddToFavorite = (id: string | string): void => {
 		const { addToFavorite } = this.props;
 		addToFavorite(id);
 	}
@@ -36,12 +40,19 @@ export default class ContentCard extends React.Component<any> {
 	render() {
 		const { content, user, setToPlay } = this.props;
 
-        if (!user || !content.length) return <Empty description={false} />
+		if (!user || !content.length) return <Empty description={false} />
 
 		return (
 			<ContentCardView>
-				{content.map(({ id, ...props }: any) => (
-					<Card key={id} id={id} onAddToFavorite={this.handleAddToFavorite} onRemoveFromFavorite={this.handleRemoveFromFavorite} onClickPlay={setToPlay} {...props} />
+				{content.map(({ track_id, ...props }: any) => (
+					<Card
+						key={track_id}
+						id={track_id}
+						onAddToFavorite={this.handleAddToFavorite}
+						onRemoveFromFavorite={this.handleRemoveFromFavorite}
+						onClickPlay={setToPlay}
+						{...props}
+					/>
 				))}
 			</ContentCardView>
 		);

@@ -1,78 +1,15 @@
 import { IActionType, IContentReducerState } from './reducers.d';
 import { Content } from '../constants/content.enum';
 
+const baseUrl = "http://5.101.51.243:8080/music-service/file";
+
 const INITIAL_STATE: IContentReducerState = {
-	audio: [
-		{
-			id: btoa('test_audio_content_v1'),
-			title: 'first',
-			author: 'untitled',
-			image: 'https://source.unsplash.com/random',
-			track: require('../components/player/file.mp3'),
-		},
-		{
-			id: btoa('test_audio_content_v2'),
-			title: 'second',
-			author: 'untitled',
-			image: 'https://source.unsplash.com/user/erondu',
-			track: require('../components/player/file.mp3'),
-		},
-		{
-			id: btoa('test_audio_content_v3'),
-			title: 'third',
-			author: 'untitled',
-			image: 'https://source.unsplash.com/user/erondu',
-			track: require('../components/player/file.mp3'),
-		},
-		{
-			id: btoa('test_audio_content_v4'),
-			title: 'fourth',
-			author: 'untitlefdsfsdfsdfdsfdsfsdfdsfsdfsdfdsdsd',
-			image: 'https://picsum.photos/200',
-			track: require('../components/player/file.mp3'),
-		},
-		{
-			id: btoa('test_audio_content_v5'),
-			title: '5',
-			author: 'untitled',
-			image: 'https://picsum.photos/200',
-			track: require('../components/player/file.mp3'),
-		},
-		{
-			id: btoa('test_audio_content_v6'),
-			title: '6',
-			author: 'untitled',
-			image: 'https://picsum.photos/200',
-			track: require('../components/player/file.mp3'),
-		},
-		{
-			id: btoa('test_audio_content_v7'),
-			title: '7',
-			author: 'untitled',
-			image: 'https://picsum.photos/200',
-			track: require('../components/player/file.mp3'),
-		},
-		{
-			id: btoa('test_audio_content_v8'),
-			title: '8',
-			author: 'untitled',
-			image: 'https://picsum.photos/200',
-			track: require('../components/player/file.mp3'),
-		},
-		{
-			id: btoa('test_audio_content_v9'),
-			title: '9',
-			author: 'untitled',
-			image: 'https://picsum.photos/200',
-			track: require('../components/player/file.mp3'),
-		}
-	],
+	audio: [],
 	current: {
-		id: btoa('test_audio_content_v1'),
-		title: 'first',
-		author: 'untitled',
-		image: 'https://source.unsplash.com/random',
-		track: require('../components/player/file.mp3'),
+		track_id: `${baseUrl}/Hz5APT5EODtMPEsgLSAcPjs+ND5BQkwubXAz`,
+		title: "Молодость",
+		author: "Порнофильмы",
+		cover_id: `IT04PD46IE06QDA9MCAyMDIwLTA1LTA0IDIgMTIuMzUuMDgucG5n`,
 	},
 };
 
