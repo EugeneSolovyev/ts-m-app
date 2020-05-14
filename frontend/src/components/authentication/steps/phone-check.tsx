@@ -1,17 +1,21 @@
 import React, { useContext } from "react";
-import { Formik, FormikProps, ErrorMessage } from "formik";
+import {Field, Formik, FormikProps} from "formik";
 import { verifyPhone, checkPhone } from "../../../actions/user";
 import { SignUpContext } from "../../../common/contexts/sign-up.context";
 import { WrappedForm } from "../styles";
-import { Button, TextField } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import SignupSchema from "../../../validation-schemas/index";
 import step from "../constant";
+
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/material.css'
 
 interface IFormikValues {
   phone: string;
 }
 
 interface IPhoneCheckProps {
+  onContinue(): void;
   onContinue(step?: number): void;
 }
 
@@ -28,9 +32,13 @@ const PhoneCheck = ({ onContinue }: IPhoneCheckProps) => {
     const { exists } = await checkPhone(values.phone);
 
     if (!exists) {
-      await verifyPhone(values.phone);
-      handleUpdateValues(values);
-      onContinue(step.REGISTRATION_STEP);
+      const serverResponse = await verifyPhone(values.phone);
+
+      if (!(serverResponse instanceof Error)) {
+        handleUpdateValues(values);
+        onContinue(step.REGISTRATION_STEP);
+
+      }
     } else {
       onContinue(step.AUTHENTICATE_STEP);
     }
@@ -42,24 +50,28 @@ const PhoneCheck = ({ onContinue }: IPhoneCheckProps) => {
       onSubmit={handleSubmit}
       validationSchema={SignupSchema}
     >
-      {({ values, handleChange, errors }: FormikProps<IFormikValues>) => (
+      {({ errors }: FormikProps<IFormikValues>) => (
         <WrappedForm>
-          <TextField
-            error={errors.phone ? true : false}
-            fullWidth
-            value={values.phone}
-            onChange={handleChange}
-            name="phone"
-            label="Phone"
-            variant="outlined"
-            placeholder="Type your phone number here..."
-          />
-          <ErrorMessage name="phone" component="div" className="error" />
+          <Field name="phone">
+            {({field, form}: { field: any; form: FormikProps<IFormikValues> }) => {
+              const handleChange = (value: string) => form.setFieldValue('phone', `+${value}`);
+              return (
+                <PhoneInput
+                  inputClass={errors.phone ? 'phone-input phone-error' : 'phone-input'}
+                  onChange={handleChange}
+                  value={field.phone}
+                  placeholder='Enter your phone'
+                />
+              );
+            }}
+          </Field>
+          {errors.phone && <div className='phone-error-text'>{errors.phone}</div>}
           <Button fullWidth type="submit" variant="outlined" color="primary">
             Check phone number and continue
           </Button>
         </WrappedForm>
-      )}
+      )
+      }
     </Formik>
   );
 };

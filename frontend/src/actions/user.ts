@@ -48,7 +48,9 @@ export const verifyPhone = async (phone: string): Promise<Error | boolean> => {
     localStorage.setItem(JWT_TOKEN_KEY, `Bearer ${token}`);
     return true;
   } else {
-    throw Error();
+    const test = new Error('Your number is not valid');
+    toast.error(test.message);
+    return test;
   }
 };
 
