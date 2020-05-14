@@ -21,14 +21,13 @@ export interface IUserReducerState {
 }
 
 export interface IAudio {
-	id: string | number;
-    title: string;
-    author: string;
-    image?: string;
-	track: string;
+	track_id: string | number;
+	title: string;
+	author: string;
+	cover_id?: string;
 }
 
 export interface IContentReducerState {
-    audio: IAudio[];
+	audio: IAudio[];
 	current: IAudio | null;
 }
