@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import {Formik, FormikProps, Field} from 'formik';
 import {useHistory} from "react-router-dom";
 import {bindActionCreators} from 'redux';
@@ -18,6 +18,7 @@ import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/material.css'
 
 import * as Yup from 'yup';
+import {SignUpContext} from "../../../common/contexts/sign-up.context";
 
 interface IFormikValues {
     username: string;
@@ -26,8 +27,10 @@ interface IFormikValues {
 }
 
 const Authenticate = ({signIn, ...props}: any) => {
+    const {values} = useContext(SignUpContext)
+
     const InitialValues: IFormikValues = {
-        username: '',
+        username: values ? values.phone : '',
         password: '',
         showPassword: false,
     }
@@ -70,7 +73,7 @@ const Authenticate = ({signIn, ...props}: any) => {
                                 <PhoneInput
                                     inputClass={errors.username ? 'phone-input phone-error' : 'phone-input'}
                                     onChange={handleChange}
-                                    value={field.username}
+                                    value={InitialValues.username || field.username}
                                     placeholder='Enter your phone'
                                 />
                             );

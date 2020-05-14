@@ -20,7 +20,7 @@ const SignUp = () => {
 	const [step, setStep] = useState<StepType>(1)
 	const StepComponent = useMemo(() => pathOr(null, [step], SIGN_UP_COMPONENTS), [step])
 
-	const hadnleContinue = (step?: number): void => {
+	const handleContinue = (step?: number): void => {
 		if(step){
 			setStep(step)
 		} else {
@@ -30,7 +30,7 @@ const SignUp = () => {
 
 	return (
 		<SignUpProvider>
-			<StepComponent onContinue={hadnleContinue}/>
+			<StepComponent onContinue={handleContinue}/>
 		</SignUpProvider>
 	);
 };

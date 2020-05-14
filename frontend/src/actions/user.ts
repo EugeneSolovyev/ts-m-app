@@ -2,7 +2,6 @@ import { find, propEq, pipe } from "ramda";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
 import { User } from "../constants/user.enum";
-import { IUserReducerState } from "../reducers/reducers.d";
 import HTTP from "../common/api";
 
 const STUB_CODE: string = "9999";
@@ -48,7 +47,7 @@ export const verifyPhone = async (phone: string): Promise<Error | boolean> => {
     localStorage.setItem(JWT_TOKEN_KEY, `Bearer ${token}`);
     return true;
   } else {
-    throw Error();
+    throw new Error('Your number is not valid');
   }
 };
 
