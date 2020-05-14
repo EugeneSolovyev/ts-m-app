@@ -51,6 +51,7 @@ export default class ContentCard extends React.Component<any> {
 						onAddToFavorite={this.handleAddToFavorite}
 						onRemoveFromFavorite={this.handleRemoveFromFavorite}
 						onClickPlay={setToPlay}
+						track_id={track_id}
 						{...props}
 					/>
 				))}
