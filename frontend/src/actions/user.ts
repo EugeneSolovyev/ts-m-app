@@ -2,10 +2,7 @@ import { find, propEq, pipe } from "ramda";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
 import { User } from "../constants/user.enum";
-// import { IUserReducerState } from "../reducers/reducers.d";
 import HTTP from "../common/api";
-// import {Simulate} from "react-dom/test-utils";
-// import touchCancel = Simulate.touchCancel;
 
 const STUB_CODE: string = "9999";
 const VERIFY_PHONE_ENDPOINT: string =
@@ -45,8 +42,6 @@ export const verifyPhone = async (phone: string): Promise<Error | boolean> => {
     phone,
     code: STUB_CODE,
   });
-
-  console.log(token)
 
   if (token) {
     localStorage.setItem(JWT_TOKEN_KEY, `Bearer ${token}`);
