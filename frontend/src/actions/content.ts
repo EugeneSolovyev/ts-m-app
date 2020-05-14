@@ -16,6 +16,6 @@ export const setToPlay = (id: PossibleIDType) => ({
 	type: Content,
 	payload: <IContentReducerState>(state: any): IContentReducerState => ({
 		...state,
-		current: find(propEq('_id', id))(state.audio)
+		current: find(propEq('track_id', id))(state.audio)
 	})
 })

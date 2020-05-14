@@ -1,7 +1,7 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import IconButton from '@material-ui/core/IconButton'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import StarIcon from '@material-ui/icons/Star';
 
 
@@ -10,7 +10,7 @@ export const FavoriteButton: React.FC = () => {
     const favoriteTracks = localStorage.getItem('favoriteTracks');
     return JSON.parse(favoriteTracks || '[]');
   });
-  const currentTrackId: string = useSelector((state: any): string => state.content.current.id);
+  const currentTrackId: string = useSelector((state: any): string => state.content.current && state.content.current.id);
 
   const checkTrackId = useCallback((trackData: string[]) =>
     trackData.some((trackId: string) => trackId === currentTrackId), [currentTrackId]);

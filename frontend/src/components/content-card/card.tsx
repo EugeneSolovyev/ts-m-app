@@ -23,7 +23,6 @@ export default ({
 		track_id,
 		onRemoveFromFavorite,
 	]);
-	// const handleClickPlay = useCallback(() => onClickPlay(track_id), [ track_id, onClickPlay ]);
 
 	return (
 		<ContentCover image={`http://5.101.51.243:8080/music-service/file/${cover_id}`}>

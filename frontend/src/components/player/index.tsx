@@ -8,6 +8,7 @@ import { setToPlay } from '../../actions/content'
 import { getAllMusic } from './fetchMusic'
 import PlayerComponent from '../../ui/player'
 import { currentPlaySelector } from './selector'
+import { baseUrl } from "../../constants/content.enum"
 
 interface ITrackList {
 	value: IAudio;
@@ -21,10 +22,9 @@ interface IPlayerProp {
 
 interface IPlayerState {
 	list: ITrackList;
-	baseUrl: string;
 }
 
-const DEFAULT_VALUE: any = { track_id: null, track: '' };
+const DEFAULT_VALUE: any = { track_id: null };
 
 @(connect(
 	(state: IStore) => ({
@@ -43,8 +43,7 @@ export default class Player extends React.Component<any, IPlayerState> {
 	constructor(props: any) {
 		super(props);
 		this.state = {
-			list: this.props.content,
-			baseUrl: 'http://5.101.51.243:8080/music-service/file',
+			list: this.props.content
 		};
 	}
 
@@ -62,7 +61,7 @@ export default class Player extends React.Component<any, IPlayerState> {
 		if (this.state.list !== prevState.list) {
 			const { list } = this.state;
 			if (list) {
-				this.content.current.src = `${this.state.baseUrl}/${list.value.track_id}`;
+				this.content.current.src = `${baseUrl}/${list.value.track_id}`;
 			}
 		}
 	}
@@ -70,10 +69,10 @@ export default class Player extends React.Component<any, IPlayerState> {
 	postHandleNext = (): void => {
 		const { setToPlay } = this.props;
 		const { list } = this.state;
-		const { _id: newID, track_id } = pathOr(DEFAULT_VALUE, ['value'], list);
-		if (track_id && newID) {
-			this.content.current.src = `${this.state.baseUrl}/${track_id}`;
-			setToPlay(newID);
+		const { track_id } = pathOr(DEFAULT_VALUE, ['value'], list);
+		if (track_id) {
+			this.content.current.src = `${baseUrl}/${track_id}`;
+			setToPlay(track_id);
 		} else {
 			this.content.current.pause();
 		}
