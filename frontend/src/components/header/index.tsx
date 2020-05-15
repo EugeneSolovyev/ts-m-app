@@ -45,7 +45,7 @@ export default class Header extends React.Component<any> {
 						<span className="username">
 							{current.username}
 						</span>
-            <Link to="/sendmusic" className="link">Add track</Link>
+            <Link to="/send-music" className="link">Add track</Link>
 						<Link to="/" onClick={signOut}>
 							<Icon type="logout" />
 						</Link>

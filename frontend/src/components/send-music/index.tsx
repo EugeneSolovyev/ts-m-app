@@ -1,8 +1,8 @@
 import React from 'react';
-import { TextField, Button, Typography } from '@material-ui/core';
+import { TextField, Button, Typography, InputLabel, FormControl, Select } from '@material-ui/core';
 import { WrappedForm } from './style';
 import { Formik, FormikProps } from 'formik';
-import { loadMusic } from "../../actions/user";
+import { loadMusic } from "../player/fetchMusic";
 
 interface IFormikValues {
     author: string;
@@ -20,15 +20,11 @@ const SendMusic = () => {
     }
 
     const handleSubmit = (values: IFormikValues) => {
-        
-        const data = {
-            "author": values.author,
-            "track": music.current.files[0],
-            "title": values.title,
-            "type": values.type,
-            "cover": picture.current.files[0]
-        }
-        loadMusic(data)
+        loadMusic({
+            ...values,
+            track: music.current.files[0],
+            cover: picture.current.files[0]
+        })
     }
 
     return (
@@ -38,10 +34,26 @@ const SendMusic = () => {
         >
             {({ values, handleChange }: FormikProps<IFormikValues>) => (
                 <WrappedForm>
-                    <Typography variant="h1">Load music</Typography>
+                    <Typography variant="h1">Upload music</Typography>
                     <TextField value={values.author} fullWidth name="author" label="Author" onChange={handleChange} variant="outlined" placeholder="Enter author"/>
                     <TextField value={values.title} fullWidth name="title" label="Title" onChange={handleChange} variant="outlined" placeholder="Enter title"/>
-                    <TextField value={values.type} fullWidth name="type" label="Type" onChange={handleChange} variant="outlined" placeholder="Enter type"/>
+                    <FormControl variant="filled">
+                        <InputLabel htmlFor="filled-age-native-simple">Type</InputLabel>
+                        <Select
+                        native
+                        value={values.type}
+                        onChange={handleChange}
+                        inputProps={{
+                            name: 'type',
+                            id: 'type-music',
+                        }}
+                        >
+                        <option aria-label="None" value="" />
+                        <option value={'music'}>Music</option>
+                        <option value={'book'}>Book</option>
+                        <option value={'podcast'}>Podcast</option>
+                        </Select>
+                    </FormControl>
                     <input
                         accept="image/*"
                         className="input"
@@ -56,7 +68,7 @@ const SendMusic = () => {
                         </Button>
                     </label>
                     <input
-                        accept="music/*"
+                        accept="audio/*"
                         className="input"
                         id="contained-button-filed"
                         multiple

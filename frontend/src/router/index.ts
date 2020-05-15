@@ -14,7 +14,7 @@ export interface IRouter {
 
 export const AUTH_PATH: string = '/auth'
 export const HOME_PATH: string = '/'
-export const SENDMUSIC_PATH: string = '/sendmusic'
+export const SENDMUSIC_PATH: string = '/send-music'
 
 const router: IRouter[] = [
 	{
