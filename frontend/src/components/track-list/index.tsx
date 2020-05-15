@@ -22,7 +22,7 @@ import {setToPlay} from "../../actions/content";
 				setToPlay,
 			},
 			dispatch
-		)) as any)gti
+		)) as any)
 export default class TrackList extends React.Component<any> {
 
 	render() {
