@@ -3,6 +3,7 @@ import { pathOr, path } from 'ramda';
 import { bindActionCreators } from 'redux';
 import { connect } from '../../helpers/connect';
 import { IAudio } from '../../reducers/reducers.d';
+import { IContentReducerState } from '../../reducers/reducers'
 import { IStore } from '../../store'
 import { setToPlay } from '../../actions/content'
 import { getAllMusic } from './fetchMusic'
@@ -22,13 +23,16 @@ interface IPlayerProp {
 
 interface IPlayerState {
 	list: ITrackList;
+	current: IContentReducerState
 }
 
-const DEFAULT_VALUE: any = { track_id: null };
 
+const DEFAULT_VALUE: any = { track_id: null };
+const currentTrackSelector = (state: IStore): IAudio => pathOr({}, [ 'content', 'current' ], state) as IAudio;
 @(connect(
 	(state: IStore) => ({
 		content: currentPlaySelector(state),
+		current: currentTrackSelector(state)
 	}),
 	(dispatch) =>
 		bindActionCreators(
@@ -43,7 +47,8 @@ export default class Player extends React.Component<any, IPlayerState> {
 	constructor(props: any) {
 		super(props);
 		this.state = {
-			list: this.props.content
+			list: this.props.content,
+			current: this.props.current,
 		};
 	}
 
@@ -53,6 +58,7 @@ export default class Player extends React.Component<any, IPlayerState> {
 		this.props.getAllMusic();
 	}
 	componentDidUpdate(prevProps: any, prevState: any) {
+
 		if (this.props.content !== prevProps.content) {
 			this.setState((state, props) => ({
 				list: this.props.content,
@@ -88,6 +94,7 @@ export default class Player extends React.Component<any, IPlayerState> {
 	};
 
 	render() {
+		console.log(this.props)
 		return <PlayerComponent onClickNext={this.handleClickNext} ref={this.content} />;
 	}
 }

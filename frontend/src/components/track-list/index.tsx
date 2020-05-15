@@ -22,13 +22,11 @@ import {setToPlay} from "../../actions/content";
 				setToPlay,
 			},
 			dispatch
-		)) as any)
+		)) as any)gti
 export default class TrackList extends React.Component<any> {
 
 	render() {
 		const { list } = this.props;
-
-
 
 		return (
 			<TrackListView>
@@ -37,7 +35,7 @@ export default class TrackList extends React.Component<any> {
 					<ListItem
 						button
 						key={track_id}
-                        onClick={event => {setToPlay(track_id); console.log(setToPlay(track_id))}}
+                        onClick={event => {setToPlay(track_id)}}
 					>
 						<ListItemText primary={`${author} - ${title}`} />
 					</ListItem>
