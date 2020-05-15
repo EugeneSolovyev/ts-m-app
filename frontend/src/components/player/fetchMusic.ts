@@ -24,8 +24,7 @@ export const loadMusic = async (tracks: any): Promise<Error | void> => {
         const { response }: any = await HTTP.post(LOADING_MUSIC_ENDPOINT, formData);
         const isDuplicate: boolean = path(['data', 'error', 'code'], response) === DUPLICATE_ERROR_CODE
         if(isDuplicate){
-            toast.error("Duplicate track")
-            return
+            throw Error("Duplicate track")
         } 
         toast.success("Success")
     } catch (error) {
