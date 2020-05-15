@@ -24,14 +24,11 @@ export default styled.div<IStylesProps>`
     .modal-view-wrapper {
         width: ${({ size }) => MODAL_SIZE[size]};
         height: auto;
-        max-height: 500px;
         position: absolute;
-        top: calc(50vh - 500px / 2);
+        top: calc(50vh - 606px / 2);
         left: calc(50% - ${({ size }) => MODAL_SIZE[size]} / 2);
         background: white;
         border-radius: 4px;
-        overflow-x: hidden;
-        overflow-y: auto;
         white-space: pre-wrap;
         overflow-wrap: break-word;
         hyphens: auto;

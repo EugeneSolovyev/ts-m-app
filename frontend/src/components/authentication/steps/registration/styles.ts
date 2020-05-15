@@ -6,9 +6,8 @@ export const RegistrWrapper = styled(Form)`
 		color: red;
 		margin-left: 0.5rem;
 	}
-	.MuiButtonBase-root {
+	.MuiButtonBase-outlined {
 		margin-top: 1rem;
-		width: 100%;
 	}
 	.MuiFormControl-root {
 		margin-top: 1rem;
