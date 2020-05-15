@@ -6,7 +6,7 @@ import {
 	IconButton,
 	InputLabel,
 } from '@material-ui/core';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { Visibility, VisibilityOff } from '@material-ui/icons'; 
 import { connect } from 'formik';
 
 interface passwordInputProps {

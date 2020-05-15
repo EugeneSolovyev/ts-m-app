@@ -10,19 +10,18 @@ import router, { IRouter } from '../../router';
 export default class RouterHandler extends React.Component<any> {
 	render() {
 		const { current } = this.props;
-
+		
         if (!current) return <Authentication />
-
 		return (
 			<Switch>
 				{router.reduce((allowedRouter: any, { path, component: Component, protectedRoute }: IRouter) => {
 					if (!current && protectedRoute) return allowedRouter;
-
 					return [
 						...allowedRouter,
 						<Route
 							key={path}
 							path={path}
+							exact
 							render={(props: RouteComponentProps<any>) => <Component {...props} />}
 						/>
 					];
