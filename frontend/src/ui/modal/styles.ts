@@ -25,7 +25,7 @@ export default styled.div<IStylesProps>`
         width: ${({ size }) => MODAL_SIZE[size]};
         height: auto;
         position: absolute;
-        top: calc(50vh - 606px / 2);
+        top: calc(50vh - 590px / 2);
         left: calc(50% - ${({ size }) => MODAL_SIZE[size]} / 2);
         background: white;
         border-radius: 4px;
