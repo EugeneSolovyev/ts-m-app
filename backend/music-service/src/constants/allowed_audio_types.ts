@@ -4,7 +4,7 @@ export class AllowedType {
     public title: string
 
     constructor(public id: string) {
-        this.title = capitalize(id)
+        this.title = capitalize(id as any)
     }
 }
 
