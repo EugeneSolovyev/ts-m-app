@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose'
+import { ALLOWED_AUDIO_TYPES, AllowedType } from '../constants/allowed_audio_types'
 
-const TypeEnum: string[] = ['music', 'podcast', 'book']
+const TypeEnum: string[] = ALLOWED_AUDIO_TYPES.map(({ id }: AllowedType) => id)
 
 const AudioSchema: Schema = new Schema({
   author: { type: Schema.Types.String, required: true },

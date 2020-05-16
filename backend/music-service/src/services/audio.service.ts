@@ -4,6 +4,7 @@ import { head } from 'ramda'
 import util from 'util'
 import { AudioModel } from '../models/audio.model'
 import { GridFS } from '../DB/grd-filesystem'
+import { ALLOWED_AUDIO_TYPES } from '../constants/allowed_audio_types'
 
 export interface MulterFile {
   key: string // Available using `S3`.
@@ -27,6 +28,7 @@ export class AudioService {
     this.upload_audio = this.upload_audio.bind(this)
     this.get_all_audio = this.get_all_audio.bind(this)
     this.get_audio_by_generic_id = this.get_audio_by_generic_id.bind(this)
+    this.get_types = this.get_types.bind(this)
   }
 
   public get_all_audio(req: Request, res: Response) {
@@ -53,7 +55,6 @@ export class AudioService {
       const audio_document = await audio.save()
       res.status(200).json(audio_document)
     } catch (error) {
-      console.log(error)
       res.status(500).json({ error })
     }
   }
@@ -98,5 +99,9 @@ export class AudioService {
     } catch (error) {
       res.status(500).json(error)
     }
+  }
+
+  public get_types(req: Request, res: Response) {
+    res.status(200).json(ALLOWED_AUDIO_TYPES)
   }
 }
