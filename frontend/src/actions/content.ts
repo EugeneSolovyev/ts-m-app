@@ -1,5 +1,5 @@
 import { find, propEq } from 'ramda'
-import { Content } from '../constants/content.enum'
+import {Content, likeIncrement} from '../constants/content.enum'
 import { IContentReducerState } from '../reducers/reducers.d'
 
 type PossibleIDType = number | string
@@ -19,3 +19,12 @@ export const setToPlay = (id: PossibleIDType) => ({
 		current: find(propEq('track_id', id))(state.audio)
 	})
 })
+
+/*
+export const setToLike = (id: PossibleIDType) => ({
+	type: likeIncrement,
+	payload: (state: any) => ({
+		...state,
+		current: find(propEq('track_id', id))(state.audio)
+	})
+})*/
