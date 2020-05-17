@@ -34,18 +34,18 @@ export class AudioService {
     this.get_by_type = this.get_by_type.bind(this);
   }
 
-  public get_all_audio(req: Request, res: Response) {
-    AudioModel.find({}, (error: Error, audio: MongooseDocument) => {
-      if (error) {
-        res.json(error);
-      }
-      res.json(audio);
-    });
+  public async get_all_audio(req: Request, res: Response) {
+    try {
+      const doc: MongooseDocument = await AudioModel.find();
+      res.json(doc)
+    } catch (error) {
+      throw Error(error)
+    }
   }
 
   public async get_by_type(req: Request, res: Response) {
     try {
-      const result = await AudioModel.find({ type: req.query.type });
+      const result = await AudioModel.find({ type: req.params.type });
       res.status(200).json(result)
     } catch (error) {
       res.status(500).json(error);
@@ -55,7 +55,7 @@ export class AudioService {
   public async get_tracks_by_ids(req: Request, res: Response) {
     try {
       const result = await AudioModel.find({
-        track_id: { $all: req.query.track_ids },
+        track_id: { $in: req.query.track_ids },
       });
       res.json(result);
     } catch (error) {

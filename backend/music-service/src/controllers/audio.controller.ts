@@ -26,7 +26,7 @@ export class AudioController {
     /**
     * @swagger
     *
-    * /music-service/get_by_ids:
+    * /music-service/favorites:
     *   get:
     *     summary: Returns a colleaction of uploaded files by passed ids
     *     description: Make sure that you've encoded all query params
@@ -46,29 +46,28 @@ export class AudioController {
     *       200:
     *         description: Collection of uploaded files
     */
-    this.app.route("/music-service/get_by_ids").get(this.audioService.get_tracks_by_ids);
+    this.app.route("/music-service/favorites").get(this.audioService.get_tracks_by_ids);
     /**
     * @swagger
     *
-    * /music-service/get_by_type:
+    * /music-service/{type}/file:
     *   get:
     *     summary: Returns a colleaction of uploaded files by passed type
     *     description: Make sure that you've encoded all query params
     *     tags:
     *       - Files
     *     parameters:
-    *       - in: query
+    *       - in: path
     *         name: type
     *         required: true
     *         schema:
     *           type: string
-    *           enum: [music, podcast, book]
-    *         description: array of track_id
+    *           enum: [music, book, podcast]
     *     responses:
     *       200:
     *         description: Collection of uploaded files
     */
-    this.app.route("/music-service/get_by_type").get(this.audioService.get_by_type);
+    this.app.route("/music-service/:type/file").get(this.audioService.get_by_type);
     /**
     * @swagger
     *
@@ -155,7 +154,7 @@ export class AudioController {
     /**
     * @swagger
     *
-    * /music-service/get_allowed_types:
+    * /music-service/get-allowed-types:
     *   get:
     *     summary: Returns allowed types
     *     tags:
@@ -165,7 +164,7 @@ export class AudioController {
     *         description: Allowed types
     */
     this.app
-      .route("/music-service/get_allowed_types")
+      .route("/music-service/get-allowed-types")
       .get(this.audioService.get_types);
   }
 }
