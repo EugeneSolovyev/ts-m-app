@@ -109,8 +109,15 @@ export class AudioController {
     *                 type: string
     *               title:
     *                 type: string
+    *               album:
+    *                 type: string
     *               type:
     *                 type: string
+    *                 enum: [music, podcast, book]
+    *               genres:
+    *                 type: array
+    *                 items:
+    *                   type: string
     *               track:
     *                 type: string
     *                 format: binary
