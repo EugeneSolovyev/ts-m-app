@@ -36,7 +36,7 @@ export class AudioService {
 
   public async get_all_audio(req: Request, res: Response) {
     try {
-      const doc: MongooseDocument = await AudioModel.find();
+      const doc = await AudioModel.find();
       res.json(doc)
     } catch (error) {
       throw Error(error)
