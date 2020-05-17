@@ -1,5 +1,5 @@
 import { IActionType, IContentReducerState } from './reducers.d';
-import { Content, likeIncrement } from '../constants/content.enum';
+import { Content } from '../constants/content.enum';
 
 
 const INITIAL_STATE: IContentReducerState = {
@@ -11,7 +11,5 @@ export default (state: IContentReducerState = INITIAL_STATE, { type, payload }: 
 	if (typeof payload === 'function' && type === Content) {
 		state = payload(state);
 	}
-	/*else if (typeof payload === 'function' && type === likeIncrement)
-		state = payload(state);*/
 	return state;
 };

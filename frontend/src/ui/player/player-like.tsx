@@ -1,41 +1,25 @@
 import React from "react";
 import IconButton from '@material-ui/core/IconButton'
-import {useSelector} from "react-redux";
-// import FavoriteIcon from '@material-ui/icons/Favorite';
+import {useDispatch, useSelector} from "react-redux";
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import {toast} from "react-toastify";
+import {getTracks, setToPlay} from "../../actions/content";
+import {findIndex, propEq} from "ramda";
 
 
-export const LikeButton: React.FC = (setToLike) => {
-  console.log(setToLike)
+export const LikeButton: React.FC = () => {
+  const currentTrackId: string = useSelector((state: any): string =>
+    state.content.current && state.content.current.track_id);
+  const tracksData: Array<object> = useSelector((state: any): any =>
+    state.content.audio);
+  const likes: string = useSelector((state: any): string =>
+    state.content.current && state.content.current.likes)
+  const dispatch = useDispatch();
 
-  /*const [favoriteTracksData, setFavoriteTrack] = useState(() => {
-    const favoriteTracks = localStorage.getItem('favoriteTracks');
-    return JSON.parse(favoriteTracks || '[]');
-  });*/
-  const currentTrackId: string = useSelector((state: any): string => state.content.current && state.content.current.track_id);
-  const likes: string = useSelector((state: any): string => state.content.current && state.content.current.likes)
-
-  /*const checkTrackId = useCallback((trackData: string[]) =>
-    trackData.some((trackId: string) => trackId === currentTrackId), [currentTrackId]);*/
-
-  /*const handleToggleToFavorite = (): void => {
-    if (checkTrackId(favoriteTracksData)) {
-      const newFavoriteTracksData: null | Array<string> = favoriteTracksData.filter((trackId: string) => trackId !== currentTrackId);
-      setFavoriteTrack(newFavoriteTracksData);
-
-    } else {
-      setFavoriteTrack((prev: Array<string>) => [currentTrackId, ...prev]);
-
-    }
-  }*/
-
-  /*useEffect(() => {
-    localStorage.setItem('favoriteTracks', JSON.stringify(favoriteTracksData));
-  }, [favoriteTracksData]);*/
 
   const handleToLike = async (event: any) => {
-    console.log(currentTrackId)
+    let newCurrentTrackData = null;
+    let newTracksData = tracksData;
 
     await fetch(`${new URL(`http://5.101.51.243:8080/music-service/file`)}`, {
       method: 'PUT',
@@ -46,17 +30,22 @@ export const LikeButton: React.FC = (setToLike) => {
       headers: {
         'Content-Type': 'application/json',
       }
-    }).then(resolved => resolved.json()).then((data: any) => {console.log(data)}
-    ).catch(error => toast(error.message));
+    }).then(resolved => resolved.json()).then((data: any) => {
+      newCurrentTrackData = data;
 
+      newTracksData =
+        newTracksData[findIndex(propEq('track_id', currentTrackId))(newTracksData)] = newCurrentTrackData;
+
+      dispatch(getTracks(tracksData));
+      dispatch(setToPlay(currentTrackId));
+
+    }).catch(error => toast(error.message));
   }
 
   return (
     <div>
       {likes}
-      <IconButton onClick={handleToLike} color="secondary" >
-        {/*{checkTrackId(favoriteTracksData) ? <FavoriteIcon /> : <FavoriteBorderIcon />}*/}
-
+      <IconButton onClick={handleToLike} color="secondary">
         <FavoriteBorderIcon />
       </IconButton>
     </div>
