@@ -26,6 +26,52 @@ export class AudioController {
     /**
     * @swagger
     *
+    * /music-service/get_by_ids:
+    *   get:
+    *     summary: Returns a colleaction of uploaded files by passed ids
+    *     description: Make sure that you've encoded all query params
+    *     tags:
+    *       - Files
+    *     parameters:
+    *       - in: query
+    *         name: track_ids[]
+    *         explode: true
+    *         required: true
+    *         schema:
+    *           type: array
+    *           items:
+    *             type: string
+    *         description: array of track_id
+    *     responses:
+    *       200:
+    *         description: Collection of uploaded files
+    */
+    this.app.route("/music-service/get_by_ids").get(this.audioService.get_tracks_by_ids);
+    /**
+    * @swagger
+    *
+    * /music-service/get_by_type:
+    *   get:
+    *     summary: Returns a colleaction of uploaded files by passed type
+    *     description: Make sure that you've encoded all query params
+    *     tags:
+    *       - Files
+    *     parameters:
+    *       - in: query
+    *         name: type
+    *         required: true
+    *         schema:
+    *           type: string
+    *           enum: [music, podcast, book]
+    *         description: array of track_id
+    *     responses:
+    *       200:
+    *         description: Collection of uploaded files
+    */
+    this.app.route("/music-service/get_by_type").get(this.audioService.get_by_type);
+    /**
+    * @swagger
+    *
     * /music-service/file/{filename}:
     *   get:
     *     summary: Returns stream of file
