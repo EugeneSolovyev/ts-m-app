@@ -1,4 +1,4 @@
-import { find, propEq, head, path } from "ramda";
+import { find, propEq, head, path, reduce } from "ramda";
 import { Content } from "../constants/content.enum";
 import { IContentReducerState } from "../reducers/reducers.d";
 import HTTP from "../common/api";
@@ -8,6 +8,12 @@ type PossibleIDType = number | string;
 
 const FILE_ENDPOINT: string = "/music-service/file";
 const DUPLICATE_ERROR_CODE: number = 11000;
+
+const findAndReplaceTrack = (updatedTrack: any, trackId: string) => (audio: any[], track: any) => {
+  if (track.track_id === trackId) return [...audio, updatedTrack];
+
+  return [...audio, track];
+};
 
 export const getAllMusic = () => async (dispatch: any) => {
   const response = await HTTP.get(FILE_ENDPOINT);
@@ -61,11 +67,10 @@ export const setToPlay = (id: PossibleIDType) => ({
 });
 
 export const setLikeToTrack = (trackId: string): any => async (
-  dispatch: any,
-  getState: Function
+  dispatch: any
 ) => {
   try {
-    const current: any = await HTTP.put(FILE_ENDPOINT, {
+    const updatedTrack: any = await HTTP.put(FILE_ENDPOINT, {
       track_id: trackId,
     });
 
@@ -73,11 +78,8 @@ export const setLikeToTrack = (trackId: string): any => async (
       type: Content,
       payload: <IContentReducerState>(state: any): IContentReducerState => ({
         ...state,
-        audio: [
-          ...state.audio.filter(({ track_id }: any) => track_id !== trackId),
-          current,
-        ],
-        current,
+        audio: reduce(findAndReplaceTrack(updatedTrack, trackId), [], state.audio),
+        current: updatedTrack,
       }),
     });
   } catch (error) {
