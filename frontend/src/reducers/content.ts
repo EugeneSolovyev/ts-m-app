@@ -11,6 +11,5 @@ export default (state: IContentReducerState = INITIAL_STATE, { type, payload }: 
 	if (typeof payload === 'function' && type === Content) {
 		state = payload(state);
 	}
-
 	return state;
 };

@@ -32,7 +32,7 @@ export default ({
 					<Icon type='plus' />
 				</Button>
 				<Button type='link' htmlType='button' onClick={onPlay}>
-					<Icon type='heart' />
+					<Icon type='caret-right' />
 				</Button>
 				<Button type='link' htmlType='button' onClick={handleClickRemove}>
 					<Icon type='minus' />
