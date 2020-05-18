@@ -72,7 +72,7 @@ export default class Player extends React.Component<any, IPlayerState> {
         if (this.state.list !== prevState.list) {
             const {list} = this.state;
             if (list) {
-				this.setTrackSrc(list.value.track_id);
+				this.setTrackSrc(this.state.list.value.track_id);
             }
         }
     }
