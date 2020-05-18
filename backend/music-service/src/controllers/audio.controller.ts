@@ -154,7 +154,7 @@ export class AudioController {
     /**
     * @swagger
     *
-    * /music-service/get-allowed-types:
+    * /music-service/content/types:
     *   get:
     *     summary: Returns allowed types
     *     tags:
@@ -164,7 +164,7 @@ export class AudioController {
     *         description: Allowed types
     */
     this.app
-      .route("/music-service/get-allowed-types")
+      .route("/music-service/content/types")
       .get(this.audioService.get_types);
   }
 }
