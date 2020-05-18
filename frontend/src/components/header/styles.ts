@@ -29,4 +29,11 @@ export default styled.header`
     .ant-btn-link {
         color: ${({ theme: { secondaryColor } }) => secondaryColor};
     }
+
+    .link{
+        justify-self: end;
+        margin: 0 20px;
+        background: black;
+        padding: 10px;
+    }
 `

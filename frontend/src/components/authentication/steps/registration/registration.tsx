@@ -134,7 +134,7 @@ const Registration = ({ onContinue }: IPhoneCheckProps) => {
               handleChange={handleChange}
             />
             <ErrorMessage name='repeatPassword' component='span' className='error' />
-            <Button variant='outlined' size='medium' type='submit' color='primary'>
+            <Button variant='outlined' size='medium' type='submit' color='primary' fullWidth>
               Register and continue
 						</Button>
           </RegistrWrapper>

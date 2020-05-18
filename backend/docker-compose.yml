@@ -43,7 +43,7 @@ services:
       - 5434:5432
     restart: always
     volumes:
-      - ./db/postgres/user/data:/var/lib/postgresql/data
+      - ~/db/postgres/user/data:/var/lib/postgresql/data
 
   nginx:
     image: nginx

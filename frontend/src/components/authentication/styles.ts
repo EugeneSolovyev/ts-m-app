@@ -30,10 +30,7 @@ export const WrappedForm = styled(Form)`
         line-height: 1.66;
         letter-spacing: 0.03333em;
     }
-    
-    .auth-button {
-        margin-top: 20px;
-    }
+   
     .password {
         margin-top: 20px;
     }

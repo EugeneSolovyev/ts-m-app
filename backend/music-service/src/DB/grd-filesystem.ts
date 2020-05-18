@@ -32,7 +32,11 @@ export class GridFS {
     ])
 
   private get_filename(req, { originalname }, cb): any {
-    const track_id = new (Buffer.from as any)(originalname).toString('base64')
-    cb(null, track_id)
+    try {
+      const track_id: string = new (Buffer.from as any)(originalname).toString('base64')
+      cb(null, track_id)
+    } catch(error) {
+      cb(error)
+    }
   }
 }

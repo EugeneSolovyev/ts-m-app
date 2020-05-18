@@ -13,7 +13,6 @@ const currentTrackSelector = (state: IStore): IAudio => pathOr({}, [ 'content', 
 export default class CurrentTrack extends React.Component<any> {
 	render() {
 		const { track } = this.props;
-
 		return <TrackCover {...track} />;
 	}
 }
