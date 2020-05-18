@@ -5,8 +5,7 @@ import { User } from "../constants/user.enum";
 import HTTP from "../common/api";
 
 const STUB_CODE: string = "9999";
-const VERIFY_PHONE_ENDPOINT: string =
-	"/user-service/verification/phone/check-phone-code";
+const VERIFY_PHONE_ENDPOINT: string = "/user-service/verification/phone/check-phone-code";
 const SIGN_UP_ENDPOINT: string = "/user-service/users";
 const LOGIN_ENDPOINT: string = "/user-service/auth";
 const CHECK_PHONE_EXISTS: string = "/user-service/users/check-phone";
@@ -66,8 +65,8 @@ const auth = async (
 		localStorage.setItem(USER_ID_KEY, id);
 		return { id, ...rest };
 	} catch (error) {
-		toast.error(error.toString());
-		throw Error(error);
+		toast.error('Wrong login or password');
+		//throw Error(error);
 	}
 };
 
