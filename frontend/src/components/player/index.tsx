@@ -3,7 +3,6 @@ import {pathOr, path} from 'ramda';
 import {bindActionCreators} from 'redux';
 import {connect} from '../../helpers/connect';
 import {IAudio} from '../../reducers/reducers.d';
-import {IContentReducerState} from '../../reducers/reducers'
 import {IStore} from '../../store'
 import {setToPlay} from '../../actions/content'
 import {getAllMusic} from './fetchMusic'
@@ -53,6 +52,10 @@ export default class Player extends React.Component<any, IPlayerState> {
 
     content = createRef<HTMLAudioElement>();
 
+	private setTrackSrc(id: string | number) {
+		this.content.current.src = `${baseUrl}/${id}`
+	}
+
     componentDidMount() {
         this.props.getAllMusic();
     }
@@ -65,12 +68,12 @@ export default class Player extends React.Component<any, IPlayerState> {
         }
         if (this.props.current !== prevProps.current) {
             const {current} = this.props;
-            return this.content.current.src = `${baseUrl}/${current.track_id}`;
+			this.setTrackSrc(current.track_id)
         }
         if (this.state.list !== prevState.list) {
             const {list} = this.state;
             if (list) {
-                this.content.current.src = `${baseUrl}/${list.value.track_id}`;
+				this.setTrackSrc(list.value.track_id);
             }
         }
     }
@@ -80,7 +83,7 @@ export default class Player extends React.Component<any, IPlayerState> {
         const {list} = this.state;
         const {track_id} = pathOr(DEFAULT_VALUE, ['value'], list);
         if (track_id) {
-            this.content.current.src = `${baseUrl}/${track_id}`;
+            this.setTrackSrc(track_id);
             setToPlay(track_id);
         } else {
             this.content.current.pause();
@@ -97,7 +100,6 @@ export default class Player extends React.Component<any, IPlayerState> {
     };
 
     render() {
-		console.log(this.props)
         return <PlayerComponent onClickNext={this.handleClickNext} ref={this.content}/>;
     }
 }
