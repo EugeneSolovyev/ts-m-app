@@ -2,7 +2,7 @@
 import React, {
   memo,
   useState,
-  forwardRef,
+  useRef,
   useCallback,
   useEffect,
 } from "react";
@@ -12,99 +12,104 @@ import PlayerTime from "./player-time";
 import PlayerVolume from "./player-volume";
 import PlayerView from "./styles";
 
+import { baseUrl } from "../../constants/content.enum";
+
 interface IPlayerProps {
   onClickNext(): void;
   likes: number;
+  src: string;
 }
 
 const EVENT_NAME: string = "timeupdate";
 
-const Player = forwardRef(
-  ({ onClickNext, likes }: IPlayerProps, audioReference: any) => {
-    const [isPlaying, setPlaying] = useState<boolean>(true);
-    const [duration, setDuration] = useState<number>(0);
-    const [time, setTime] = useState<number>(0);
-    const [volume, setVolume] = useState<number>(50);
-    const [loop, setLoop] = useState<boolean>(false);
+const Player = ({ onClickNext, likes, src }: IPlayerProps) => {
+  const [isPlaying, setPlaying] = useState<boolean>(false);
+  const [duration, setDuration] = useState<number>(0);
+  const [time, setTime] = useState<number>(0);
+  const [volume, setVolume] = useState<number>(10);
+  const [loop, setLoop] = useState<boolean>(false);
 
-    const timeUpdate = ({ target: { currentTime, duration } }: any) => {
-      setTime(currentTime);
-      setDuration(duration);
+  const audioReference: any = useRef()
 
-      if (duration !== 0 && currentTime === duration) {
-        onClickNext();
-      }
-    };
+  const timeUpdate = ({ target: { currentTime, duration } }: any) => {
+    setTime(currentTime);
+    setDuration(duration);
 
-    const handleTogglePlay = useCallback(() => {
-      setPlaying(!isPlaying);
-      const { current } = audioReference;
-      isPlaying ? current.pause() : current.play();
-    }, [audioReference, isPlaying]);
-
-    const handleClickNext = useCallback(() => {
+    if (duration !== 0 && currentTime === duration) {
       onClickNext();
-    }, [onClickNext]);
+    }
+  };
 
-    const handleChangeTime = useCallback(
-      (event: React.ChangeEvent<{}>, value: any) => {
-        const { current } = audioReference;
-        current.currentTime = value;
-      },
-      [audioReference]
-    );
+  const handleTogglePlay = useCallback(() => {
+    setPlaying(!isPlaying);
+    const { current } = audioReference;
+    isPlaying ? current.pause() : current.play();
+  }, [audioReference, isPlaying]);
 
-    const handleChangeVolume = useCallback(
-      (value: any) => {
-        const { current } = audioReference;
-        setVolume(value);
-        current.volume = value / 100;
-      },
-      [audioReference]
-    );
+  const handleClickNext = useCallback(() => {
+    onClickNext();
+  }, [onClickNext]);
 
-    const handleToggleLoop = useCallback(() => {
+  const handleChangeTime = useCallback(
+    (event: React.ChangeEvent<{}>, value: any) => {
       const { current } = audioReference;
-      setLoop(!loop);
-      current.loop = !loop;
-    }, [audioReference, loop]);
+      current.currentTime = value;
+    },
+    [audioReference]
+  );
 
-    useEffect(() => {
+  const handleChangeVolume = useCallback(
+    (value: any) => {
       const { current } = audioReference;
-      current.play();
+      setVolume(value);
+      current.volume = value / 100;
+    },
+    [audioReference]
+  );
 
-      current.addEventListener(EVENT_NAME, timeUpdate);
+  const handleToggleLoop = useCallback(() => {
+    const { current } = audioReference;
+    setLoop(!loop);
+    current.loop = !loop;
+  }, [audioReference, loop]);
 
-      return () => {
-        current.removeEventListener(EVENT_NAME, timeUpdate);
-      };
-    }, [audioReference]);
+  useEffect(() => {
+    const { current } = audioReference;
 
-    return (
-      <>
-        <PlayerView>
-          <PlayerControl
-            isPlaying={isPlaying}
-            onTogglePlay={handleTogglePlay}
-            onClickNext={handleClickNext}
-          />
-          <PlayerTime
-            currentTime={time}
-            duration={duration}
-            onHandleChangeTime={handleChangeTime}
-          />
-          <PlayerVolume
-            volume={volume}
-            onChange={handleChangeVolume}
-            loop={loop}
-            onToggleLoop={handleToggleLoop}
-            likes={likes}
-          />
-        </PlayerView>
-        <audio ref={audioReference} preload="metadata" />
-      </>
-    );
-  }
-);
+    current.play();
+    setPlaying(true)
+
+    current.addEventListener(EVENT_NAME, timeUpdate);
+
+    return () => {
+      current.removeEventListener(EVENT_NAME, timeUpdate);
+    };
+  }, [src]);
+
+  return (
+    <>
+      <PlayerView>
+        <PlayerControl
+          isPlaying={isPlaying}
+          onTogglePlay={handleTogglePlay}
+          onClickNext={handleClickNext}
+        />
+        <PlayerTime
+          currentTime={time}
+          duration={duration}
+          onHandleChangeTime={handleChangeTime}
+        />
+        <PlayerVolume
+          volume={volume}
+          onChange={handleChangeVolume}
+          loop={loop}
+          onToggleLoop={handleToggleLoop}
+          likes={likes}
+        />
+      </PlayerView>
+      <audio ref={audioReference} src={`${baseUrl}/${encodeURIComponent(src)}`} preload="metadata" />
+    </>
+  );
+};
 
 export default memo(Player);

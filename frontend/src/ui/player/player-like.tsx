@@ -3,6 +3,7 @@ import IconButton from '@material-ui/core/IconButton'
 import {useDispatch, useSelector} from "react-redux";
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import {setLikeToTrack} from "../../actions/content";
+import { LikeButtonWrapper } from './styles'
 
 
 interface ILikesProps {
@@ -21,12 +22,12 @@ export const LikeButton: React.FC<ILikesProps> = ({likes}: ILikesProps) => {
   }
 
   return (
-    <div>
-      {likes}
+    <LikeButtonWrapper>
+      <span>{likes}</span>
       <IconButton onClick={handleToLike} color="secondary">
         <FavoriteBorderIcon />
       </IconButton>
-    </div>
+    </LikeButtonWrapper>
 
   )
 }
