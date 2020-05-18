@@ -10,6 +10,7 @@ interface IAdditionalControlProps {
   loop?: boolean;
   onChange(value: any): void;
   onToggleLoop(): void;
+  likes: number;
 }
 
 const AdditionalControl = ({
@@ -17,6 +18,7 @@ const AdditionalControl = ({
   onChange,
   loop = false,
   onToggleLoop,
+  likes
 }: IAdditionalControlProps) => {
   return (
     <AdditionalControlView loop={loop}>
@@ -28,7 +30,7 @@ const AdditionalControl = ({
         <Icon type='retweet' />
       </Loop>
       <FavoriteButton />
-      <LikeButton />
+      <LikeButton likes={likes} />
     </AdditionalControlView>
   );
 };

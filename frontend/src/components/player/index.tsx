@@ -99,6 +99,12 @@ export default class Player extends React.Component<any, IPlayerState> {
     };
 
     render() {
-        return <PlayerComponent onClickNext={this.handleClickNext} ref={this.content}/>;
+        return (
+          <PlayerComponent
+            onClickNext={this.handleClickNext}
+            ref={this.content}
+            likes={pathOr(0, ['list', 'value', 'likes'], this.state)}
+          />
+        );
     }
 }

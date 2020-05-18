@@ -8,11 +8,12 @@ import PlayerView from './styles'
 
 interface IPlayerProps {
     onClickNext(): void;
+    likes: number;
 }
 
 const EVENT_NAME: string = 'timeupdate'
 
-const Player = forwardRef(({onClickNext}: IPlayerProps, audioReference: any) => {
+const Player = forwardRef(({onClickNext, likes}: IPlayerProps, audioReference: any) => {
     const [isPlaying, setPlaying] = useState<boolean>(true)
     const [duration, setDuration] = useState<number>(0)
     const [time, setTime] = useState<number>(0)
@@ -84,6 +85,7 @@ const Player = forwardRef(({onClickNext}: IPlayerProps, audioReference: any) => 
                     onChange={handleChangeVolume}
                     loop={loop}
                     onToggleLoop={handleToggleLoop}
+                    likes={likes}
                 />
             </PlayerView>
             <audio ref={audioReference}/>

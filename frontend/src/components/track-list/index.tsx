@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from '../../helpers/connect';
 import { IStore } from '../../store'
-import TrackListView, { TrackListItem } from './styles'
+import TrackListView from './styles'
 import { IAudio } from '../../reducers/reducers.d'
 import { favoriteTracksSelector } from './selectors'
 
