@@ -26,6 +26,51 @@ export class AudioController {
     /**
     * @swagger
     *
+    * /music-service/favorites:
+    *   get:
+    *     summary: Returns a colleaction of uploaded files by passed ids
+    *     description: Make sure that you've encoded all query params
+    *     tags:
+    *       - Files
+    *     parameters:
+    *       - in: query
+    *         name: track_ids[]
+    *         explode: true
+    *         required: true
+    *         schema:
+    *           type: array
+    *           items:
+    *             type: string
+    *         description: array of track_id
+    *     responses:
+    *       200:
+    *         description: Collection of uploaded files
+    */
+    this.app.route("/music-service/favorites").get(this.audioService.get_tracks_by_ids);
+    /**
+    * @swagger
+    *
+    * /music-service/{type}/file:
+    *   get:
+    *     summary: Returns a colleaction of uploaded files by passed type
+    *     description: Make sure that you've encoded all query params
+    *     tags:
+    *       - Files
+    *     parameters:
+    *       - in: path
+    *         name: type
+    *         required: true
+    *         schema:
+    *           type: string
+    *           enum: [music, book, podcast]
+    *     responses:
+    *       200:
+    *         description: Collection of uploaded files
+    */
+    this.app.route("/music-service/:type/file").get(this.audioService.get_by_type);
+    /**
+    * @swagger
+    *
     * /music-service/file/{filename}:
     *   get:
     *     summary: Returns stream of file
@@ -63,8 +108,15 @@ export class AudioController {
     *                 type: string
     *               title:
     *                 type: string
+    *               album:
+    *                 type: string
     *               type:
     *                 type: string
+    *                 enum: [music, podcast, book]
+    *               genres:
+    *                 type: array
+    *                 items:
+    *                   type: string
     *               track:
     *                 type: string
     *                 format: binary
@@ -102,7 +154,7 @@ export class AudioController {
     /**
     * @swagger
     *
-    * /music-service/get_allowed_types:
+    * /music-service/content/types:
     *   get:
     *     summary: Returns allowed types
     *     tags:
@@ -112,7 +164,7 @@ export class AudioController {
     *         description: Allowed types
     */
     this.app
-      .route("/music-service/get_allowed_types")
+      .route("/music-service/content/types")
       .get(this.audioService.get_types);
   }
 }
