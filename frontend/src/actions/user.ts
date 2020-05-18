@@ -66,7 +66,6 @@ const auth = async (
 		return { id, ...rest };
 	} catch (error) {
 		toast.error('Wrong login or password');
-		//throw Error(error);
 	}
 };
 
