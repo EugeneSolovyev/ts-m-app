@@ -7,7 +7,7 @@ const onFullfiled = (response: any) => {
 };
 
 const onRejected = (error: any) => {
-	return error;
+	throw new Error(error)
 };
 
 const HTTP = axios.create({
