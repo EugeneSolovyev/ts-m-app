@@ -23,6 +23,7 @@ export default ({
 		track_id,
 		onRemoveFromFavorite,
 	]);
+	const onPlay = useCallback(() => onClickPlay(track_id),[track_id, onClickPlay])
 
 	return (
 		<ContentCover image={`http://5.101.51.243:8080/music-service/file/${cover_id}`}>
@@ -30,7 +31,7 @@ export default ({
 				<Button type='link' htmlType='button' onClick={handleClickAdd}>
 					<Icon type='plus' />
 				</Button>
-				<Button type='link' htmlType='button'>
+				<Button type='link' htmlType='button' onClick={onPlay}>
 					<Icon type='heart' />
 				</Button>
 				<Button type='link' htmlType='button' onClick={handleClickRemove}>

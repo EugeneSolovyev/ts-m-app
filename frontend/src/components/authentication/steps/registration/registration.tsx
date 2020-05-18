@@ -138,6 +138,7 @@ const Registration = ({ onContinue }: IPhoneCheckProps) => {
 					/>
 					<Button
 						variant='outlined'
+						fullWidth
 						size='medium'
 						type='submit'
 						color='primary'>
