@@ -7,7 +7,7 @@ import { IStore } from "../../store";
 import { setToPlay } from "../../actions/content";
 import { getAllMusic } from "../../actions/content";
 import PlayerComponent from "../../ui/player";
-import { currentPlaySelector } from "./selector";
+import { currentTrackSelector } from "./selector";
 import { baseUrl } from "../../constants/content.enum";
 
 interface ITrackList {
@@ -26,12 +26,9 @@ interface IPlayerState {
 }
 
 const DEFAULT_VALUE: any = { track_id: null };
-const currentTrackSelector = (state: IStore): IAudio =>
-  pathOr({}, ["content", "current"], state) as IAudio;
 
 @(connect(
   (state: IStore) => ({
-    content: currentPlaySelector(state),
     current: currentTrackSelector(state),
   }),
   (dispatch) =>
@@ -47,7 +44,7 @@ export default class Player extends React.Component<any, IPlayerState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      list: this.props.content,
+      list: this.props.current,
     };
   }
 
@@ -62,9 +59,9 @@ export default class Player extends React.Component<any, IPlayerState> {
   }
 
   componentDidUpdate(prevProps: any, prevState: any) {
-    if (this.props.content !== prevProps.content) {
+    if (this.props.current !== prevProps.current) {
       this.setState((state, props) => ({
-        list: this.props.content,
+        list: this.props.current,
       }));
     }
     if (this.props.current !== prevProps.current) {
@@ -100,11 +97,13 @@ export default class Player extends React.Component<any, IPlayerState> {
   };
 
   render() {
+    const likes: number = pathOr(0, ["list", "value", "likes"], this.state)
+
     return (
       <PlayerComponent
         onClickNext={this.handleClickNext}
         ref={this.content}
-        likes={pathOr(0, ["list", "value", "likes"], this.state)}
+        likes={likes}
       />
     );
   }
