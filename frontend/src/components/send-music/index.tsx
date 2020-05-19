@@ -12,7 +12,7 @@ import { bindActionCreators } from "redux";
 import { WrappedForm } from "./style";
 import { Formik, FormikProps } from "formik";
 import { connect } from "../../helpers/connect";
-import { uploadMusic } from "../../actions/content";
+import { uploadMusic, getTypes } from "../../actions/content";
 
 interface ISendMusicProps {
     uploadMusic: Function
@@ -22,106 +22,129 @@ interface IFormikValues {
   author: string;
   title: string;
   type: string;
+  album: string;
 }
 
-const InitialValues: IFormikValues = {
-    author: "",
-    title: "",
-    type: "",
-  };
-
 const SendMusic = ({ uploadMusic }: ISendMusicProps) => {
-  const picture = React.useRef(null);
-  const music = React.useRef(null);
+    const picture = React.useRef(null);
+    const music = React.useRef(null);
+    const [types, setTypes] = React.useState([]);
+    const [genres, setGenres] = React.useState([]);
+    React.useEffect(() => {
+        getTypes().then(data => setTypes(data));
+    }, []);
+
+    const InitialValues: IFormikValues = {
+        author: '',
+        title: '',
+        type: '',
+        album: '',
+    }
 
   const handleSubmit = async (values: IFormikValues): Promise<void> => {
     await uploadMusic({
       ...values,
+        genres: genres.map(data => data.genre),
       track: head(music.current.files),
       cover: head(picture.current.files),
     });
   };
 
-  return (
-    <Formik initialValues={InitialValues} onSubmit={handleSubmit}>
-      {({ values, handleChange }: FormikProps<IFormikValues>) => (
-        <WrappedForm>
-          <Typography variant="h1">Upload music</Typography>
-          <TextField
-            value={values.author}
-            fullWidth
-            name="author"
-            label="Author"
-            onChange={handleChange}
-            variant="outlined"
-            placeholder="Enter author"
-          />
-          <TextField
-            value={values.title}
-            fullWidth
-            name="title"
-            label="Title"
-            onChange={handleChange}
-            variant="outlined"
-            placeholder="Enter title"
-          />
-          <FormControl variant="filled">
-            <InputLabel htmlFor="filled-age-native-simple">Type</InputLabel>
-            <Select
-              native
-              value={values.type}
-              onChange={handleChange}
-              inputProps={{
-                name: "type",
-                id: "type-music",
-              }}
-            >
-              <option aria-label="None" value="" />
-              <option value={"music"}>Music</option>
-              <option value={"book"}>Book</option>
-              <option value={"podcast"}>Podcast</option>
-            </Select>
-          </FormControl>
-          <input
-            accept="image/*"
-            className="input"
-            id="contained-button-file"
-            multiple
-            type="file"
-            ref={picture}
-          />
-          <label className="picture" htmlFor="contained-button-file">
-            <Button variant="contained" color="primary" component="span">
-              Upload Cover
-            </Button>
-          </label>
-          <input
-            accept="audio/*"
-            className="input"
-            id="contained-button-filed"
-            multiple
-            type="file"
-            ref={music}
-          />
-          <label htmlFor="contained-button-filed">
-            <Button variant="contained" color="secondary" component="span">
-              Upload Audio
-            </Button>
-          </label>
-          <Button fullWidth type="submit" variant="outlined" color="primary">
-            Send
-          </Button>
-        </WrappedForm>
-      )}
-    </Formik>
-  );
-};
 
+    const handleOnAddGenge = () => {
+        const values = [...genres];
+        values.push({genre: ''})
+        setGenres(values)
+    }
+
+    const handlerDeleteGenre = (element: any) => {
+        const values = [...genres];
+        values.splice(element, 1);
+        setGenres(values);
+    }
+
+    const handleInputChange = (index: number, event: any) => {
+        const values = [...genres];
+        values[index].genre = event.target.value;
+        setGenres(values);
+    }
+
+    return (
+        <Formik
+            initialValues={InitialValues}
+            onSubmit={handleSubmit}
+        >
+            {({ values, handleChange }: FormikProps<IFormikValues>) => (
+                <WrappedForm>
+                    <Typography variant="h1">Upload music</Typography>
+                    <TextField value={values.author} fullWidth name="author" label="Author" onChange={handleChange} variant="outlined" placeholder="Enter author"/>
+                    <TextField value={values.title} fullWidth name="title" label="Title" onChange={handleChange} variant="outlined" placeholder="Enter title"/>
+                    <TextField value={values.album} fullWidth name="album" label="Album" onChange={handleChange} variant="outlined" placeholder="Enter album"/>
+                    <FormControl variant="filled">
+                        <InputLabel htmlFor="filled-age-native-simple">Type</InputLabel>
+                        <Select
+                        native
+                        value={values.type}
+                        onChange={handleChange}
+                        inputProps={{
+                            name: 'type',
+                            id: 'type-music',
+                        }}
+                        >
+                        <option aria-label="None" value="" />
+                        {types.map(type => {
+                            return (
+                                <option key={type.id} value={type.id}>{type.title}</option>
+                            )
+                        })}
+                        </Select>
+                    </FormControl>
+                    <Button className="button" onClick={handleOnAddGenge} variant="outlined" color="secondary">Add item</Button>
+                    {genres.map((item, index) => {
+                        return (
+                            <div key={index}>
+                                <TextField name="genre" value={item.genres} label="Genre" onChange={event => handleInputChange(index, event)} variant="outlined" placeholder="Enter genre"/>
+                                <Button className="button" onClick={() => {handlerDeleteGenre(index)}} variant="outlined" color="primary">Delete genre</Button>
+                            </div>
+                        )
+                    })}
+                    <input
+                        accept="image/*"
+                        className="input"
+                        id="contained-button-file"
+                        multiple
+                        type="file"
+                        ref={picture}
+                    />
+                    <label className="picture" htmlFor="contained-button-file">
+                        <Button className="upload" variant="contained" color="primary" component="span">
+                        Upload Cover
+                        </Button>
+                    </label>
+                    <input
+                        accept="audio/*"
+                        className="input"
+                        id="contained-button-filed"
+                        multiple
+                        type="file"
+                        ref={music}
+                    />
+                    <label htmlFor="contained-button-filed">
+                        <Button className="upload" variant="contained" color="secondary" component="span">
+                        Upload Audio
+                        </Button>
+                    </label>
+                    <Button fullWidth type="submit" variant="outlined" color="primary">Send</Button>
+                </WrappedForm>
+            )}
+        </Formik>
+      )
+};
 export default connect(null, (dispatch) =>
-  bindActionCreators(
-    {
-      uploadMusic,
-    },
-    dispatch
-  )
+    bindActionCreators(
+        {
+            uploadMusic,
+        },
+        dispatch
+    )
 )(SendMusic);
