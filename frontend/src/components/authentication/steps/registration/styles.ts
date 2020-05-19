@@ -16,6 +16,7 @@ export const RegistrWrapper = styled(Form)`
 	}
 	.MuiFormControl-root {
 		margin-bottom: 0.5rem;
+		margin-top: 0.3rem;
 		width: 100%;
 	}
 `
