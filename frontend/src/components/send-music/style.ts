@@ -36,4 +36,17 @@ export const WrappedForm = styled(Form)`
         margin-right: 30px;
     }
 
+    .button{
+        display: block;
+        margin: 20px 0;
+    }
+
+    .MuiButtonBase-root {
+        margin: 20px 0;
+    }
+
+    .upload{
+        margin-top: 0;
+    }
+
 `;

@@ -7,7 +7,9 @@ import { toast } from "react-toastify";
 type PossibleIDType = number | string;
 
 const FILE_ENDPOINT: string = "/music-service/file";
+const TYPE_MUSIC_ENDPOINT: string = "/music-service/content/types"
 const DUPLICATE_ERROR_CODE: number = 11000;
+
 
 const findAndReplaceTrack = (updatedTrack: any, trackId: string) => (audio: any[], track: any) => {
   if (track.track_id === trackId) return [...audio, updatedTrack];
@@ -28,10 +30,11 @@ export const getAllMusic = () => async (dispatch: any) => {
   });
 };
 
-export const uploadMusic = (tracks: any) => async (dispatch: any) => {
+export const uploadMusic = ({genres = [], ...track}: any) => async (dispatch: any) => {
   const formData = new FormData();
-  Object.keys(tracks).forEach((key: string) => {
-    formData.append(key, tracks[key]);
+  genres.forEach((data: string) => formData.append('genres', data))
+  Object.keys(track).forEach((key: string) => {
+    formData.append(key, track[key]);
   });
 
   try {
@@ -57,6 +60,8 @@ export const uploadMusic = (tracks: any) => async (dispatch: any) => {
     toast.error(error.message);
   }
 };
+
+export const getTypes = () => HTTP.get(TYPE_MUSIC_ENDPOINT)
 
 export const setToPlay = (id: PossibleIDType) => ({
   type: Content,
