@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Popover, Icon } from 'antd';
-import { Loop } from '@material-ui/icons';
-import { VolumeSlider, AdditionalControlView } from './styles';
+import {AdditionalControlView} from './styles';
 import {FavoriteButton} from "./player-favorite";
 import {LikeButton} from "./player-like";
 import {makeStyles, Theme, createStyles} from '@material-ui/core/styles';
@@ -10,14 +8,15 @@ import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import { Loop } from '@material-ui/icons';
+import LoopIcon from '@material-ui/icons/Loop';
 
 interface IAdditionalControlProps {
-  volume: number;
-  loop?: boolean;
-  onChange(value: any): void;
-  onToggleLoop(): void;
-  likes: number;
+    volume: number;
+    loop?: boolean;
+    onChange(value: any): void;
+    onToggleLoop(): void;
+    likes: number;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -38,12 +37,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 const AdditionalControl = ({
-  volume,
-  onChange,
-  loop = false,
-  onToggleLoop,
-  likes
-}: IAdditionalControlProps) => {
+                               volume,
+                               onChange,
+                               loop = false,
+                               onToggleLoop,
+                               likes
+                           }: IAdditionalControlProps) => {
+
     const [sound, setSound] = useState(true);
     const [soundMemory, setSoundMemory] = useState(volume);
     const classes = useStyles();
@@ -63,28 +63,27 @@ const AdditionalControl = ({
     });
 
     return (
-    <AdditionalControlView loop={loop}>
-        <Tooltip title={
-            <Slider
-                value={volume}
-                color='secondary'
-                onChange={handleChangeVolume}
-            />
-        } arrow interactive classes={classes}>
-            <IconButton
-                children={volume > 0 ? <VolumeUpIcon/> : <VolumeOffIcon/>}
-                onClick={() => setSound(!sound)}
-                color='inherit'
-            />
-        </Tooltip>
-
-        <Loop onClick={onToggleLoop} type='link' fontSize='small'>
-        <Icon type='retweet' />
-      </Loop>
-      <FavoriteButton />
-      <LikeButton likes={likes} />
-    </AdditionalControlView>
-  );
+        <AdditionalControlView loop={loop}>
+            <Tooltip title={
+                <Slider
+                    value={volume}
+                    color='secondary'
+                    onChange={handleChangeVolume}
+                />
+            } arrow interactive classes={classes}>
+                <IconButton
+                    children={volume > 0 ? <VolumeUpIcon/> : <VolumeOffIcon/>}
+                    onClick={() => setSound(!sound)}
+                    color='inherit'
+                />
+            </Tooltip>
+            <Loop onClick={onToggleLoop} type='link' fontSize='small'>
+                <LoopIcon/>
+            </Loop>
+            <FavoriteButton/>
+            <LikeButton likes={likes}/>
+        </AdditionalControlView>
+    );
 };
 
 export default AdditionalControl;

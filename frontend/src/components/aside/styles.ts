@@ -25,6 +25,14 @@ export default styled.aside`
 		height: inherit;
 		overflow-y: auto;
 		display: block;
-		padding: 0 1rem;
+		padding: 0;
+		
+		ul {
+		    padding: 0;
+		    
+		    div {
+		        padding: 3px;
+		    }
+		}
 	}
 `;
