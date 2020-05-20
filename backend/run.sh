@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # user-service
 export USER_SERVICE_SERVER_PORT=6000
@@ -23,4 +23,4 @@ export SPRING_JPA_SHOW_SQL=true
 export SPRING_JPA_PROPERTIES_HIBERNATE_TEMP_USE_JDBC_METADATA_DEFAULTS=false
 export SWAGGER_HOST=localhost:8080
 
-docker-compose up --build
+docker-compose up --build -d
