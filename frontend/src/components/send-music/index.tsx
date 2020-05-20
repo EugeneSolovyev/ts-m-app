@@ -46,23 +46,31 @@ const SendMusic = ({ uploadMusic }: ISendMusicProps) => {
   const handleSubmit = async (values: IFormikValues): Promise<void> => {
     await uploadMusic({
       ...values,
-      genres: genres,
+      genres: genres.map(data => data.genre),
       track: head(music.current.files),
       cover: head(picture.current.files),
     });
   };
-
+  
   const handleOnAddGenge = () => {
-    setGenres([...genres, '' ]);
-  };
+    setGenres((genres) => [...genres, {
+      id: genres.length,
+      genre: ''
+    }])
 
-  const handlerDeleteGenre = (index: any) => {
-    setGenres([...genres.filter((item, i) => i !== index)]);
   };
+  const handleDeleteGenre = React.useCallback((index: any) => () => {
+    setGenres((genres) => genres.filter(({id}) => id !== index))
+  }, []);
+  
+  const handleInputChange = React.useCallback((id) => ({target: {value}}: any) => {
+    setGenres((original) => original.reduce((acc, item) => {
+      if (item.id === id) item.genre = value
+      return [...acc, item]
+    }, []))
+  }, []);
 
-  const handleInputChange = (index: number, event: any) => {
-    setGenres([...genres.map((item, number) => number === index ? event.target.value : item )]);
-  };
+  
 
   return (
     <Formik initialValues={InitialValues} onSubmit={handleSubmit}>
@@ -125,22 +133,20 @@ const SendMusic = ({ uploadMusic }: ISendMusicProps) => {
           >
             Add item
           </Button>
-          {genres.map((item, index) => {
+          {genres.map(({id, genre}) => {
             return (
-              <div key={index}>
+              <div key={id.toString()}>
                 <TextField
                   name="genre"
-                  value={item}
+                  value={genre}
                   label="Genre"
-                  onChange={(event) => handleInputChange(index, event)}
+                  onChange={handleInputChange(id)}
                   variant="outlined"
                   placeholder="Enter genre"
                 />
                 <Button
                   className="button"
-                  onClick={() => {
-                    handlerDeleteGenre(index);
-                  }}
+                  onClick={handleDeleteGenre(id)}
                   variant="outlined"
                   color="primary"
                 >
