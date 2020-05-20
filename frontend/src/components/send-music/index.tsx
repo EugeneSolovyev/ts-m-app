@@ -39,7 +39,8 @@ const SendMusic = ({ uploadMusic }: ISendMusicProps) => {
   const [types, setTypes] = React.useState([]);
   const [genres, setGenres] = React.useState([]);
   useAsync(async () => {
-    await getTypes().then((data: any) => setTypes(data));
+    const data: any = await getTypes();
+    setTypes(data)
   }, []);
 
   const handleSubmit = async (values: IFormikValues): Promise<void> => {
