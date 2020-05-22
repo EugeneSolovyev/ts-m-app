@@ -74,7 +74,6 @@ export default class Player extends React.Component<any, IPlayerState> {
   };
 
   render() {
-    console.log(this.props.current);
     const likes: number = pathOr(0, ["list", "value", "likes"], this.state);
     const trackId: string = pathOr(
       "",
