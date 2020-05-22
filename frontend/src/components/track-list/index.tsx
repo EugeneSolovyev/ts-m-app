@@ -12,10 +12,17 @@ import {setToPlay} from "../../actions/content";
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import { baseUrl } from "../../constants/content.enum";
+import {currentTrackSelector} from "../player/selector";
+
+
+interface IListState {
+	selectedIndex: string | number;
+}
 
 @(connect((state: IStore) => ({
-	list: favoriteTracksSelector(state),
-}),
+		list: favoriteTracksSelector(state),
+		current: currentTrackSelector(state),
+	}),
 	(dispatch) =>
 		bindActionCreators(
 			{
@@ -23,7 +30,22 @@ import { baseUrl } from "../../constants/content.enum";
 			},
 			dispatch
 		)) as any)
-export default class TrackList extends React.Component<any> {
+export default class TrackList extends React.Component<any, IListState> {
+	constructor(props: any) {
+		super(props);
+		this.state ={
+			selectedIndex: ''
+		}
+	}
+
+	handleChangeSelected = (id: string | number): void => {
+		this.setState({selectedIndex: id});
+	};
+
+	goPlayer = (id: string | number) => () => {
+		this.handleChangeSelected(id);
+		this.props.setToPlay(id);
+	};
 
 	render() {
 		const { list } = this.props;
@@ -34,7 +56,8 @@ export default class TrackList extends React.Component<any> {
 					<ListItem
 						button
 						key={track_id}
-                        onClick={(args) => (dispatch: any, event: any) => {dispatch(setToPlay(track_id)); console.log(track_id)}}
+						selected={this.state.selectedIndex === track_id}
+                        onClick={this.goPlayer(track_id)}
 					>
 						<ListItemAvatar>
 							<Avatar
