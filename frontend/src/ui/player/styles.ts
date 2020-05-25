@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Slider } from "antd";
+import Tooltip from '@material-ui/core/Tooltip';
 
 export const LikeButtonWrapper = styled.div`
   display: grid;
@@ -27,10 +27,19 @@ export const AdditionalControlView: any = styled.div`
     padding: 0 15px;
     font-size: 14px;
   }
+  
+ .MuiTooltip-tooltip-root {
+    width: 300px;
+    background-color: #fff;
+}
+ 
 `;
 
-export const VolumeSlider = styled(Slider)`
-  height: 150px;
+export const VolumeSlider = styled(Tooltip)`
+
+.MuiTooltip-tooltip {
+  background-color: #fff;
+}
 `;
 
 export default styled.div`
